@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
+import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
 
@@ -14,6 +15,9 @@ class AmbulanceScreen extends StatefulWidget {
 }
 
 class _HospitalsScreenState extends State<AmbulanceScreen> {
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> data = {};
+
   @override
   Widget build(BuildContext context) {
     return ScreensUITemplete(
@@ -75,14 +79,87 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                 state.hospital!.ambulances![index].hospitalId,
                               ),
                             ),
-                            // DataCell(
-                            //     Text(
-                            //         state.hospital!.ambulances![index]. currentPosition??
-                            //         "-",),s
-                            //     ),
+                            DataCell(
+                              Text(
+                                state.hospital!.ambulances![index]
+                                        .currentPosition
+                                        .toString() +
+                                    "-",
+                              ),
+                            ),
                             DataCell(
                               Text(state.hospital!.ambulances![index].driverId),
                             ),
+                            DataCell(Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    // data['Position'] = value;
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Add New Ambulance'),
+                                          content: Form(
+                                            key: _formKey,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                TextFormField(
+                                                  decoration: InputDecoration(
+                                                      labelText: 'Driver Id'),
+                                                  onChanged: (value) {
+                                                    data['Driver Id'] = value;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: InputDecoration(
+                                                      labelText: 'Car Num.'),
+                                                  onChanged: (value) {
+                                                    data['Car Num.'] = value;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: InputDecoration(
+                                                      labelText: 'Hospital'),
+                                                  onChanged: (value) {
+                                                    data['Hospital'] = value;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: InputDecoration(
+                                                      labelText: 'Position'),
+                                                  onChanged: (value) {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                RepositoryProvider.of<
+                                                            HospitalsProvider>(
+                                                        context)
+                                                    .add((data));
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Add'),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Cancel'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ))
                           ],
                         ),
                       ),

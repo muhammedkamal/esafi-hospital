@@ -90,4 +90,9 @@ class HospitalsProvider {
     hospital = await getHospital(hospital!.id);
     return;
   }
+
+  void add(addAmbulanceToHospital) {
+    
+
+  }
 }
