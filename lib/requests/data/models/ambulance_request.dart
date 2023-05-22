@@ -72,7 +72,9 @@ class AmbulanceRequest {
           : null,
       type: AmbulanceRequestType.values
           .firstWhere((element) => describeEnum(element) == data['type']),
-      caseDetails: data['caseDetails'],
+      caseDetails: data['caseDetails'] != null
+          ? CaseDetails.fromMap(data['caseDetails'])
+          : null,
     );
   }
 
@@ -93,7 +95,7 @@ class AmbulanceRequest {
       'canceledAt': canceledAt,
       'completedAt': completedAt,
       'type': describeEnum(type),
-      'caseDetails': caseDetails,
+      'caseDetails': caseDetails?.toMap(),
     };
   }
 
@@ -159,35 +161,33 @@ enum AmbulanceRequestStatus {
 enum AmbulanceRequestType { emergency, normal }
 
 class CaseDetails {
-  String? id;
   String title;
-  String numberOfPatients;
+  num numberOfPatients;
   List<String>? caseImages;
   CaseCategories category;
   CaseDetails(
       {required this.title,
       required this.numberOfPatients,
       this.caseImages,
-      this.id,
       required this.category});
 
   //serialize
   factory CaseDetails.fromMap(Map<String, dynamic> data) {
     return CaseDetails(
-      id: data['uid'],
       title: data['title'],
-      numberOfPatients: data['numberOfPatients'],
-      category: CaseCategories.values
-          .firstWhere((element) => describeEnum(element) == data['category']),
-      caseImages: data['caseImages'],
+      numberOfPatients: data['numberOfPatients'] is String
+          ? num.parse(data['numberOfPatients'])
+          : data['numberOfPatients'],
+      category: data['category'] is CaseCategories
+          ? data['category']
+          : CaseCategories.values.firstWhere(
+              (element) => describeEnum(element) == data['category']),
+      caseImages: (data['caseImages'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
   }
-  factory CaseDetails.fromSnapshot(DocumentSnapshot snapshot) {
-    print(snapshot.data());
-    final Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    data['uid'] = snapshot.id;
-    return CaseDetails.fromMap(data);
-  }
+
   //deserialize
   Map<String, dynamic> toMap() {
     return {

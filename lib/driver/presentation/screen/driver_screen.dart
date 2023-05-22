@@ -1,4 +1,3 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +40,7 @@ class DriverScreen extends StatelessWidget {
                       label: Text("Add Driver"),
                     ),
                     title: 'Drivers',
-                    table: DataTable2(
+                    table: DataTable(
                       columns: [
                         DataColumn(
                           label: Text('Name'),

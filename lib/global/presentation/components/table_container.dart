@@ -1,4 +1,3 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -11,7 +10,7 @@ class TableContainer extends StatelessWidget {
     this.headerTrailing,
   }) : super(key: key);
   final String title;
-  final DataTable2 table;
+  final DataTable table;
   final Widget? headerTrailing;
   @override
   Widget build(BuildContext context) {

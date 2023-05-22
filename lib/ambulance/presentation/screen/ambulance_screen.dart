@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,7 +49,7 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                       label: Text("Add Ambulance"),
                     ),
                     title: 'Ambulance',
-                    table: DataTable2(
+                    table: DataTable(
                       columns: [
                         DataColumn(
                           label: Text('Driver Id'),

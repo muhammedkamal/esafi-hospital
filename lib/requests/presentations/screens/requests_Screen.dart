@@ -1,7 +1,6 @@
 import 'package:admin/global/services/auth_service.dart';
 import 'package:admin/requests/data/models/ambulance_request.dart';
 import 'package:admin/requests/logic/requests_handler/requests_handler_cubit.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +31,7 @@ class RequestsScreen extends StatelessWidget {
                   )
                 : TableContainer(
                     title: 'Requests',
-                    table: DataTable2(
+                    table: DataTable(
                       columns: [
                         DataColumn(
                           label: Text('ID'),
