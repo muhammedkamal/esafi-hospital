@@ -3,13 +3,14 @@ import 'package:admin/controllers/MenuAppController.dart';
 import 'package:admin/global/logic/blocs/auth/auth_bloc.dart';
 import 'package:admin/global/logic/cubits/hospital/single_hospital_cubit.dart';
 import 'package:admin/global/services/auth_service.dart';
+import 'package:admin/requests/logic/requests_handler/requests_handler_cubit.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
+//commit
 import 'firebase_options.dart';
 import 'global/logic/cubits/screens_handler/screens_handler_cubit.dart';
 import 'global/presentation/screens/sign_in_screen.dart';
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => SingleHospitalCubit(),
           ),
-           BlocProvider(
-            create: (context) => HospitalEmployeeBloc(),
+          BlocProvider(
+            create: (context) => RequestsHandlerCubit(),
           ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -50,6 +51,8 @@ class MyApp extends StatelessWidget {
             if (state is Authenticated) {
               BlocProvider.of<SingleHospitalCubit>(context)
                   .getHospital(state.user.hospitalId!);
+              BlocProvider.of<RequestsHandlerCubit>(context)
+                  .getRequests(state.user.hospitalId!);
             }
           },
           builder: (context, state) {

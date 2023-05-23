@@ -146,8 +146,9 @@ class Ambulance {
   factory Ambulance.fromMap(Map<String, dynamic> data) {
     return Ambulance(
       id: data['id'],
-      currentPosition:
-          GeoPoint(data['poistion'].latitude, data['poistion'].longitude),
+      currentPosition: data['position'] != null
+          ? GeoPoint(data['poistion'].latitude, data['poistion'].longitude)
+          : null,
       driverId: data['driverId'],
       hospitalId: data['hospitalId'],
     );

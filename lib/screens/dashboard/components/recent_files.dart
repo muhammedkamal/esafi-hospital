@@ -1,5 +1,4 @@
 import 'package:admin/models/RecentFile.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -7,7 +6,7 @@ import '../../../constants.dart';
 import '../../../global/presentation/components/table_container.dart';
 
 class RecentFiles extends StatelessWidget {
-  const  RecentFiles({
+  const RecentFiles({
     Key? key,
   }) : super(key: key);
 
@@ -15,9 +14,9 @@ class RecentFiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableContainer(
       title: "Recent Files",
-      table: DataTable2(
+      table: DataTable(
         columnSpacing: defaultPadding,
-        minWidth: 600,
+        //minWidth: 600,
         columns: [
           DataColumn(
             label: Text("File Name"),
