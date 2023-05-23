@@ -65,6 +65,16 @@ class _SideMenuState extends State<SideMenu> {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(3);
             },
           ),
+             SizedBox(
+            height: defaultPadding,
+          ),
+          DrawerListTile(
+            title: "Hospital Employee", 
+            svgSrc: "assets/icons/menu_doc.svg",
+            press: () {
+              BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(4);
+            },
+          ),
           SizedBox(
             height: defaultPadding,
           ),

@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'global/logic/cubits/screens_handler/screens_handler_cubit.dart';
 import 'global/presentation/screens/sign_in_screen.dart';
+import 'hospitalemployee/logic/block/hospital-employe-block.dart';
 
 void main() async {
   await Firebase.initializeApp(
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SingleHospitalCubit(),
-          )
+          ),
+           BlocProvider(
+            create: (context) => HospitalEmployeeBloc(),
+          ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {

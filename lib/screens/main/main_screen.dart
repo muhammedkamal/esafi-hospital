@@ -1,4 +1,5 @@
 import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/global/data/models/hospitals.dart';
 
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
@@ -10,6 +11,7 @@ import '../../ambulance/presentation/screen/ambulance_screen.dart';
 import '../../driver/presentation/screen/driver_screen.dart';
 
 import '../../global/logic/cubits/screens_handler/screens_handler_cubit.dart';
+import '../../hospitalemployee/presentation/screen/hospital-employee-screen.dart';
 import '../admins/admins_screen.dart';
 import 'components/side_menu.dart';
 
@@ -20,6 +22,7 @@ class MainScreen extends StatelessWidget {
     AdminScreen(),
     DriverScreen(),
     AmbulanceScreen(),
+    HospitalEmployeeScreen(),
   ];
 
   @override
