@@ -14,18 +14,18 @@
 //         try {
 //           if (event is LoadHospitalEmployee) {
 //             emit(HospitalEmployeeLoading());
-//            List<HospitalEmployee> hospitalemployee =
-//                 await HospitalsProvider().getHospitals();
+//            HospitalEmployee hospitalemployee =
+//                 await HospitalsProvider().getHospital();
 //             emit(HospitalEmployeeLoaded(hospitalemployee));
 //             } else if (event is DeleteHospitalEmployee) {
 //             emit(HospitalEmployeeLoading());
-//             await HospitalsProvider().deleteHospitals(event.id);
-//             List<HospitalEmployee> hospitalemployee = await HospitalsProvider().getHospitals();
+//             await HospitalsProvider().deleteHospital(event.id);
+//             List<HospitalEmployee> hospitalemployee = await HospitalsProvider().getHospital();
 //             emit(HospitalEmployeeLoaded(hospitalemployee));
 //           } else if (event is UpdateHospitalEmployee) {
 //             emit(HospitalEmployeeLoading());
-//             await HospitalsProvider().updateHospitals(event.id, event.updated.toMap());
-//             List<HospitalEmployee> hospitalemployee = await HospitalsProvider().getHospitals();
+//             await HospitalsProvider().updateHospital(event.id, event.updated.toMap());
+//             List<HospitalEmployee> hospitalemployee = await HospitalsProvider().getHospital();
 //             emit(HospitalEmployeeLoaded(hospitalemployee));
 //           }
 //         } catch (e) {

@@ -1,6 +1,5 @@
 import 'package:admin/controllers/MenuAppController.dart';
 import 'package:admin/requests/presentations/screens/requests_Screen.dart';
-
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import '../../ambulance/presentation/screen/ambulance_screen.dart';
 import '../../driver/presentation/screen/driver_screen.dart';
 
 import '../../global/logic/cubits/screens_handler/screens_handler_cubit.dart';
+import '../../hospitalemployee/presentation/screen/hospital-employee-screen.dart';
 import '../../requests/data/models/ambulance_request.dart';
 import '../../requests/logic/requests_handler/requests_handler_cubit.dart';
 import '../admins/admins_screen.dart';
@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
     AdminScreen(),
     DriverScreen(),
     AmbulanceScreen(),
-   // HospitalEmployeeScreen(),
+    HospitalEmployeeScreen(),
   ];
 
   @override
