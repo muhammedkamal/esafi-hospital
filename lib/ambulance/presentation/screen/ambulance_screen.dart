@@ -107,16 +107,16 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                               children: [
                                                 TextFormField(
                                                   decoration: InputDecoration(
-                                                      labelText: 'Driver Id'),
+                                                      labelText: 'DriverID'),
                                                   onChanged: (value) {
-                                                    data['Driver Id'] = value;
+                                                    data['DriverID'] = value;
                                                   },
                                                 ),
                                                 TextFormField(
                                                   decoration: InputDecoration(
-                                                      labelText: 'Car Num.'),
+                                                      labelText: 'CarNum'),
                                                   onChanged: (value) {
-                                                    data['Car Num.'] = value;
+                                                    data['CarNum'] = value;
                                                   },
                                                 ),
                                                 TextFormField(
