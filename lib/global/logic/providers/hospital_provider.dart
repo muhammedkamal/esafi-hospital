@@ -3,6 +3,7 @@ import 'package:admin/global/utlis/helpers/firestore_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../driver/data/model/driver.dart';
 import '../../data/models/hospitals.dart';
 
 class HospitalsProvider {

@@ -9,6 +9,15 @@ abstract class DriverEvent extends Equatable {
 
 class LoadDriver extends DriverEvent {}
 
+class AddDriver extends DriverEvent {
+  final Map<String, dynamic> data;
+
+  AddDriver(this.data);
+
+  @override
+  List<Object> get props => [data];
+}
+
 class DeleteDriver extends DriverEvent {
   final String id;
 
@@ -16,7 +25,6 @@ class DeleteDriver extends DriverEvent {
 
   @override
   List<Object> get props => [id];
-
 }
 
 class UpdateDriver extends DriverEvent {

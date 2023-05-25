@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../driver/data/model/driver.dart';
 import '../../../data/models/hospitals.dart';
 import '../../providers/hospital_provider.dart';
 
@@ -19,7 +20,6 @@ class SingleHospitalCubit extends Cubit<SingleHospitalState> {
       emit(SingleHospitalControlledState(hospital!));
     }
   }
-
   Future<void> addDriverToHospital(Map<String, dynamic> data) async {
     await HospitalsProvider().addDriverToHospital(data);
     hospital!.drivers!.add(AmbulanceDriver.fromMap(data));

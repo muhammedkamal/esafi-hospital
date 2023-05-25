@@ -5,10 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
+import '../../../responsive.dart';
 import '../../logic/bloc/driver_bloc.dart';
 
-class DriverScreen extends StatelessWidget {
+class DriverScreen extends StatefulWidget {
   const DriverScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DriverScreen> createState() => _DriverScreenState();
+}
+
+class _DriverScreenState extends State<DriverScreen> {
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> data = {};
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +27,94 @@ class DriverScreen extends StatelessWidget {
       },
       title: 'Drivers',
       widgets: [
+        BlocBuilder<DriverBloc, DriverState>(
+          builder: (context, state) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical: defaultPadding /
+                          (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Add New Driver'),
+                          content: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Name'),
+                                  onChanged: (value) {
+                                    data['name'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Phone Number'),
+                                  onChanged: (value) {
+                                    data['phoneNumber'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Email'),
+                                  onChanged: (value) {
+                                    data['Email'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Password'),
+                                  onChanged: (value) {
+                                    data['Password'] = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<DriverBloc>(context)
+                                    .add(AddDriver(data));
+                                Navigator.of(context).pop();
+                                // bool isloading = true;
+                              },
+                              child: Text('Add'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add,
+                  ),
+                  label: Text("Add New Driver"),
+                ),
+              ],
+            );
+          },
+        ),
+        SizedBox(
+          height: defaultPadding,
+        ),
         BlocBuilder<DriverBloc, DriverState>(
           builder: (context, state) {
             if (state is DriverInitial) {
@@ -57,11 +154,11 @@ class DriverScreen extends StatelessWidget {
                     state.driver.length,
                     (index) => DataRow(
                       cells: [
-                        DataCell(Text(state.driver[index].ambulanceId)),
-                        DataCell(Text(state.driver[index].hospitalId)),
-                        DataCell(Text(state.driver[index].name)),
-                        DataCell(
-                            Text(describeEnum(state.driver[index].phoneNumber))),
+                        DataCell(Text(state.driver[index].ambulanceId ?? "-")),
+                        DataCell(Text(state.driver[index].hospitalId ?? "-")),
+                        DataCell(Text(state.driver[index].name ?? "-")),
+                        DataCell(Text(
+                            describeEnum(state.driver[index].phoneNumber ?? "-"))),
                         DataCell(
                           Row(
                             children: [
@@ -73,10 +170,36 @@ class DriverScreen extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      title: Text('Delete Hospitals'),
+                                      content: Text(
+                                          'Are you sure you want to delete this Hospitals?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            BlocProvider.of<DriverBloc>(context)
+                                                .add(DeleteDriver(
+                                                    state.driver[index].id));
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Delete'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                                 icon: Icon(
                                   Icons.delete,
-                                  color: Colors.black,
+                                  color: Colors.red,
                                 ),
                               ),
                             ],
