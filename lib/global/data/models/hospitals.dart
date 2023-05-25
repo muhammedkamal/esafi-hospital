@@ -91,7 +91,7 @@ class AmbulanceDriver {
   String phoneNumber;
   String? email;
   String hospitalId;
-  String? ambulanceId;
+  final String ambulanceId;
 
   AmbulanceDriver({
     required this.id,
@@ -99,7 +99,7 @@ class AmbulanceDriver {
     required this.phoneNumber,
     required this.email,
     required this.hospitalId,
-    this.ambulanceId,
+    required this.ambulanceId,
   });
 
   factory AmbulanceDriver.fromMap(Map<String, dynamic> data) {

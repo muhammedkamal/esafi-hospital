@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/driver/logic/bloc/driver_bloc.dart';
 import 'package:admin/global/logic/blocs/auth/auth_bloc.dart';
 import 'package:admin/global/logic/cubits/hospital/single_hospital_cubit.dart';
 import 'package:admin/global/services/auth_service.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => RequestsHandlerCubit(),
           ),
+          BlocProvider(
+            create: (context) => DriverBloc(),
+          ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Esaafi Hospital  Panel',
+              title: 'Esaafi Hospital Panel',
               theme: ThemeData.dark().copyWith(
                 scaffoldBackgroundColor: bgColor,
                 textTheme:

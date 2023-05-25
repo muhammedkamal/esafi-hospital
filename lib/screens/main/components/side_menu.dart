@@ -29,7 +29,7 @@ class _SideMenuState extends State<SideMenu> {
             child: Image.asset("assets/images/logo.png"),
           ),
           DrawerListTile(
-            title: "Dashboard",
+            title: "Request",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(0);

@@ -6,7 +6,7 @@ class Admin {
   final String email;
   final String? hospitalId;
   //role id
-  // permissions
+  //permissions
 
   Admin({
     required this.email,
