@@ -16,7 +16,7 @@ class Hospital {
     required this.name,
     required this.phoneNumber,
     this.location,
-    // required this.employees,
+     required this.employees,
   });
 
   factory Hospital.fromMap(Map<String, dynamic> data) {
@@ -25,7 +25,7 @@ class Hospital {
       name: data['name'],
       phoneNumber: data['phoneNumber'],
       location: data['location'],
-      // employees: data['employees'],
+       employees: data['employees'],
     );
   }
   factory Hospital.fromSnapshot(DocumentSnapshot snapshot) {
@@ -42,7 +42,7 @@ class Hospital {
       'name': name,
       'phoneNumber': phoneNumber,
       'location': location,
-      // 'employee': employees,
+       'employee': employees,
     };
   }
 }
@@ -50,8 +50,8 @@ class Hospital {
 class HospitalEmployee {
   final String id;
   String name;
-  String? phoneNumber;
-  String? email;
+  String phoneNumber;
+  String email;
   String hospitalId;
 
   HospitalEmployee({
