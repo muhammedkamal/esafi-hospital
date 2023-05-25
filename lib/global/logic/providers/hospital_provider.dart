@@ -92,8 +92,8 @@ class HospitalsProvider {
     return;
   }
 
+  //add Ambulance
   void add(addAmbulanceToHospital) {
-    
-
+    hospital?.ambulances?.add(addAmbulanceToHospital);
   }
 }
