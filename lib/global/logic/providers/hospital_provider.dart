@@ -19,6 +19,9 @@ class HospitalsProvider {
   Future<Hospital> getHospital(String hospitalId) async {
     DocumentSnapshot hospitalSnap =
         await FirestoreHelper.getDocumentByIdFuture('hospitals', hospitalId);
+    print("----------------> here is the hospo");
+    print(hospitalId);
+    print(hospitalSnap.data() as Map<String, dynamic>);
     hospital = Hospital.fromSnapshot(hospitalSnap);
     // get hospital employees
     QuerySnapshot employeesSnaps =
@@ -72,8 +75,9 @@ class HospitalsProvider {
   }
 
   Future<void> addAmbulanceToHospital(Map<String, dynamic> data) async {
-    await FirestoreHelper.addDocument('ambulances', data);
-    hospital = await getHospital(hospital!.id);
+    print(data);
+    await FirestoreHelper.addDocumentWithId('ambulances', data['id'], data);
+    hospital = await getHospital(data['hospitalId']);
     return;
   }
 
@@ -90,10 +94,5 @@ class HospitalsProvider {
         'hospitals_empolyees', _userCredential.user!.uid, data);
     hospital = await getHospital(hospital!.id);
     return;
-  }
-
-  //add Ambulance
-  void add(addAmbulanceToHospital) {
-    hospital?.ambulances?.add(addAmbulanceToHospital);
   }
 }

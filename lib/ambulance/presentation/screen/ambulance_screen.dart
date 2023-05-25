@@ -36,14 +36,75 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                 : TableContainer(
                     headerTrailing: ElevatedButton.icon(
                       onPressed: () {
-                        BlocProvider.of<SingleHospitalCubit>(context)
-                            .addAmbulanceToHospital({
-                          "hospitalId": state.hospital!.id,
-                          "email": "ts@rt.bg",
-                          "password": "12345678",
-                          "phoneNumber": "12345678",
-                          "name": "test",
-                        });
+                        // data['Position'] = value;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Add New Ambulance'),
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'DriverID'),
+                                      onChanged: (value) {
+                                        data['DriverID'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: 'CarNum'),
+                                      onChanged: (value) {
+                                        data['CarNum'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Position-lat'),
+                                      onChanged: (value) {
+                                        data['lat'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Position-long'),
+                                      onChanged: (value) {
+                                        data['long'] = value;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await BlocProvider.of<SingleHospitalCubit>(
+                                            context)
+                                        .addAmbulanceToHospital({
+                                      "hospitalId": state.hospital!.id,
+                                      "driverId": data['DriverID'],
+                                      "id": data['CarNum'],
+                                      "position": GeoPoint(
+                                          double.parse(data['lat']),
+                                          double.parse(data['long'])),
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Add'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       icon: Icon(Icons.add),
                       label: Text("Add Ambulance"),
@@ -71,12 +132,18 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                         state.hospital!.ambulances!.length,
                         (index) => DataRow(
                           cells: [
-                            DataCell(
-                                Text(state.hospital!.ambulances![index].id)),
+                            DataCell(Text(
+                                state.hospital!.ambulances![index].driverId ??
+                                    "-")),
                             DataCell(
                               Text(
-                                state.hospital!.ambulances![index].hospitalId,
+                                state.hospital!.ambulances![index].id,
                               ),
+                            ),
+                            DataCell(
+                              Text(state.hospital!.ambulances![index]
+                                      .hospitalId ??
+                                  "-"),
                             ),
                             DataCell(
                               Text(
@@ -86,76 +153,11 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                     "-",
                               ),
                             ),
-                            DataCell(
-                              Text(state.hospital!.ambulances![index].driverId),
-                            ),
                             DataCell(Row(
                               children: [
                                 IconButton(
                                   icon: Icon(Icons.add),
-                                  onPressed: () {
-                                    // data['Position'] = value;
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Add New Ambulance'),
-                                          content: Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'DriverID'),
-                                                  onChanged: (value) {
-                                                    data['DriverID'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'CarNum'),
-                                                  onChanged: (value) {
-                                                    data['CarNum'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Hospital'),
-                                                  onChanged: (value) {
-                                                    data['Hospital'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Position'),
-                                                  onChanged: (value) {},
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          actions: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                RepositoryProvider.of<
-                                                            HospitalsProvider>(
-                                                        context)
-                                                    .add((data));
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Add'),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Cancel'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
+                                  onPressed: () {},
                                 ),
                               ],
                             ))

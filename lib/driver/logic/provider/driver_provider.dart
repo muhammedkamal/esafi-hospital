@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../data/model/driver.dart';
 
-
-
 class DriverProvider {
   factory DriverProvider() => DriverProvider._internal();
   DriverProvider._internal();
@@ -28,18 +26,19 @@ class DriverProvider {
     await FirestoreHelper.updateDocument('ambulance_drivers', id, data);
   }
 
+  ///////////WWWWWWWWWWWWRRRRRRRRRRRRRRROOOOOOOOOOOOOONG
+
   Future<void> createDriver(Map<String, dynamic> data) async {
     String email = data['email'];
     String password = data['password'];
     data.remove('password');
-    data.remove('email');
-    DocumentReference driver =
-        await FirestoreHelper.addDocument('ambulance_driver', data);
+
     AuthService().registerUsingEmailAndPassword({
       'email': email,
       'password': password,
-      'driverId': driver.id,
-      'name': data['name'] + " Driver",
     }, collection: 'hospitals_empolyees');
+
+    DocumentReference driver =
+        await FirestoreHelper.addDocument('ambulance_driver', data);
   }
 }

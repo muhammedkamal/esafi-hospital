@@ -15,11 +15,13 @@ class SingleHospitalCubit extends Cubit<SingleHospitalState> {
     if (hospital != null) {
       emit(state);
     } else {
+      print(hospitalId);
       hospital = await HospitalsProvider().getHospital(hospitalId);
       print(hospital!.toMap());
       emit(SingleHospitalControlledState(hospital!));
     }
   }
+
   Future<void> addDriverToHospital(Map<String, dynamic> data) async {
     await HospitalsProvider().addDriverToHospital(data);
     hospital!.drivers!.add(AmbulanceDriver.fromMap(data));
@@ -28,10 +30,11 @@ class SingleHospitalCubit extends Cubit<SingleHospitalState> {
 
   Future<void> addAmbulanceToHospital(Map<String, dynamic> data) async {
     await HospitalsProvider().addAmbulanceToHospital(data);
-    hospital!.drivers!.add(AmbulanceDriver.fromMap(data));
+    hospital!.ambulances!.add(Ambulance.fromMap(data));
     emit(SingleHospitalControlledState(hospital!));
   }
-    Future<void> addHospitalEmployee(Map<String, dynamic> data) async {
+
+  Future<void> addHospitalEmployee(Map<String, dynamic> data) async {
     await HospitalsProvider().addHospitalEmployee(data);
     hospital!.drivers!.add(AmbulanceDriver.fromMap(data));
     emit(SingleHospitalControlledState(hospital!));

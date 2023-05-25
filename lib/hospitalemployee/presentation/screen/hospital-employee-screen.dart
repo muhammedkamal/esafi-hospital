@@ -8,7 +8,6 @@
 // import '../../logic/block/hospital-employe-state.dart';
 // import 'single-employee-screen.dart';
 
-
 // class HospitalEmployeeScreen extends StatelessWidget {
 //   const HospitalEmployeeScreen ({Key? key}) : super(key: key);
 
@@ -132,6 +131,7 @@
 //     );
 //   }
 // }
+import 'package:admin/global/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -161,12 +161,21 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
       widgets: [
         BlocBuilder<SingleHospitalCubit, SingleHospitalState>(
           builder: (context, state) {
+            // if (state.hospital == null) {
+            //   print(
+            //       RepositoryProvider.of<AuthService>(context).user?.hospitalId);
+            //   BlocProvider.of<SingleHospitalCubit>(context).getHospital(
+            //       RepositoryProvider.of<AuthService>(context)
+            //           .user!
+            //           .hospitalId!);
+            // }
+            // print(state.hospital);
             return state.hospital == null
                 ? const Center(
                     child: CircularProgressIndicator(
                       color: Colors.red,
                     ),
-                  )   
+                  )
                 : TableContainer(
                     headerTrailing: ElevatedButton.icon(
                       onPressed: () {
@@ -200,6 +209,9 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                         DataColumn(
                           label: Text('Hospital ID'),
                         ),
+                        DataColumn(
+                          label: Text('Actions'),
+                        ),
                       ],
                       rows: List.generate(
                         state.hospital!.employees!.length,
@@ -212,19 +224,20 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                 state.hospital!.employees![index].hospitalId,
                               ),
                             ),
-                             DataCell(
+                            DataCell(
                               Text(
                                 state.hospital!.employees![index].name,
                               ),
                             ),
-                             DataCell(
+                            DataCell(
                               Text(
                                 state.hospital!.employees![index].email,
                               ),
                             ),
-                             DataCell(
+                            DataCell(
                               Text(
-                                state.hospital!.employees![index].phoneNumber,
+                                state.hospital!.employees![index].phoneNumber ??
+                                    "-",
                               ),
                             ),
                             DataCell(Row(
@@ -266,9 +279,11 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                                 ),
                                                 TextFormField(
                                                   decoration: InputDecoration(
-                                                      labelText: 'Phone Number'),
+                                                      labelText:
+                                                          'Phone Number'),
                                                   onChanged: (value) {
-                                                    data['Phone Number'] = value;
+                                                    data['Phone Number'] =
+                                                        value;
                                                   },
                                                 ),
                                                 TextFormField(
@@ -284,10 +299,7 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                           actions: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                RepositoryProvider.of<
-                                                            HospitalsProvider>(
-                                                        context)
-                                                    .add((data));
+                                                // add admin to hospital
                                                 Navigator.of(context).pop();
                                               },
                                               child: Text('Add'),
@@ -317,6 +329,3 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
     );
   }
 }
-
-
-

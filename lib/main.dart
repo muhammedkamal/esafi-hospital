@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => AuthBloc(
               RepositoryProvider.of<AuthService>(context),
-            ),
+            )..add(CheckAuth()),
           ),
           BlocProvider(
             create: (context) => SingleHospitalCubit(),
@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
+            print(state);
             if (state is Authenticated) {
               BlocProvider.of<SingleHospitalCubit>(context)
                   .getHospital(state.user.hospitalId!);
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            if (state is AuthInitial) {
+              BlocProvider.of<AuthBloc>(context).add(CheckAuth());
+            }
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Esaafi Hospital Panel',

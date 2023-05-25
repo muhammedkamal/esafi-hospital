@@ -1,4 +1,5 @@
 import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/global/services/auth_service.dart';
 import 'package:admin/requests/presentations/screens/requests_Screen.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
@@ -20,10 +21,9 @@ import 'components/side_menu.dart';
 class MainScreen extends StatelessWidget {
   List<Widget> screens = [
     RequestsScreen(),
-    AdminScreen(),
+    HospitalEmployeeScreen(),
     DriverScreen(),
     AmbulanceScreen(),
-    HospitalEmployeeScreen(),
   ];
 
   @override
@@ -39,12 +39,12 @@ class MainScreen extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return Container(
-                    color: Colors.white,
-                    height: 200,
-                    width: 300,
-                    child: Column(
+                  return AlertDialog(
+                    content: Column(
                       children: [
+                        //get data from user which is\
+                        //1. amulance id
+                        //2. set the hospital id
                         Text('Emergency Request'),
                         Text('id: ${request.id}'),
                         ElevatedButton(
@@ -53,7 +53,9 @@ class MainScreen extends StatelessWidget {
                                 .acceptRequest(
                                     request.id!,
                                     'cA3DwLyRnfUV6hRpm0SK',
-                                    'NTwiJZd0WAH9AWCIhLgf');
+                                    RepositoryProvider.of<AuthService>(context)
+                                        .user!
+                                        .hospitalId!);
                             Navigator.pop(context);
                           },
                           child: Text('Accept'),

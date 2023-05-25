@@ -10,7 +10,6 @@ import '../providers/requests_provider.dart';
 part 'requests_handler_state.dart';
 
 class RequestsHandlerCubit extends Cubit<RequestsHandlerState> {
-  
   RequestsHandlerCubit() : super(RequestsHandlerMangedState(null));
   List<AmbulanceRequest> requests = [];
   List<String> cancelledRequests = [];
@@ -21,7 +20,7 @@ class RequestsHandlerCubit extends Cubit<RequestsHandlerState> {
             'ambulance_requests', 'status', 'pending')
         .listen((event) async {
       requests = await RequestsProvider().getRequests(hospitalId);
-      print(requests);
+      // print(requests);
       event.docs
           .map((e) => AmbulanceRequest.fromFirestore(e))
           .forEach((element) {

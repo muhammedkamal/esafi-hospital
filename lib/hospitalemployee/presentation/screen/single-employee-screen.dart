@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../global/data/models/hospitals.dart';
 
 class SingleEmployeeScreen extends StatelessWidget {
-  const SingleEmployeeScreen ({Key? key, required this.hopitalemployee})
+  const SingleEmployeeScreen({Key? key, required this.hopitalemployee})
       : super(key: key);
-  final HospitalEmployee  hopitalemployee ;
+  final HospitalEmployee hopitalemployee;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +32,13 @@ class SingleEmployeeScreen extends StatelessWidget {
                 ]),
                 DataRow(cells: [
                   DataCell(Text('Phone Number')),
-                  DataCell(Text(hopitalemployee.phoneNumber)),
+                  DataCell(Text(hopitalemployee.phoneNumber ?? "-")),
                 ]),
                 DataRow(cells: [
                   DataCell(Text('Email')),
                   DataCell(Text(hopitalemployee.email)),
                 ]),
-                 DataRow(cells: [
+                DataRow(cells: [
                   DataCell(Text('Hospital ID')),
                   DataCell(Text(hopitalemployee.hospitalId)),
                 ]),

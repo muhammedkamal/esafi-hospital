@@ -6,7 +6,7 @@ class AmbulanceDriver {
   String phoneNumber;
   String? email;
   String hospitalId;
-  final String ambulanceId;
+  String? ambulanceId;
 
   AmbulanceDriver({
     required this.id,
@@ -14,10 +14,11 @@ class AmbulanceDriver {
     required this.phoneNumber,
     required this.email,
     required this.hospitalId,
-    required this.ambulanceId,
+    this.ambulanceId,
   });
 
   factory AmbulanceDriver.fromMap(Map<String, dynamic> data) {
+    print("driver----> $data");
     return AmbulanceDriver(
       id: data['uid'],
       name: data['name'],

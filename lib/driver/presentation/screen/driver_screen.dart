@@ -154,11 +154,10 @@ class _DriverScreenState extends State<DriverScreen> {
                     state.driver.length,
                     (index) => DataRow(
                       cells: [
+                        DataCell(Text(state.driver[index].id)),
                         DataCell(Text(state.driver[index].ambulanceId ?? "-")),
-                        DataCell(Text(state.driver[index].hospitalId ?? "-")),
-                        DataCell(Text(state.driver[index].name ?? "-")),
-                        DataCell(Text(
-                            describeEnum(state.driver[index].phoneNumber ?? "-"))),
+                        DataCell(Text(state.driver[index].hospitalId)),
+                        DataCell(Text(state.driver[index].name)),
                         DataCell(
                           Row(
                             children: [
