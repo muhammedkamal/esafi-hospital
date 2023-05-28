@@ -1,11 +1,13 @@
 import 'package:admin/controllers/MenuAppController.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../global/services/auth_service.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -21,7 +23,7 @@ class Header extends StatelessWidget {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.menu, color: Colors.black),
             onPressed: context.read<MenuAppController>().controlMenu,
           ),
         if (!Responsive.isMobile(context))
@@ -65,12 +67,11 @@ class ProfileCard extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text(
-                'Moaz'
-                // RepositoryProvider.of<AuthService>(context).user != null
-                //     ? RepositoryProvider.of<AuthService>(context).user!.name
-                //     : "",
-              ),
+              child: Text("Moaz"
+                  // RepositoryProvider.of<AuthService>(context).user != null
+                  //     ? RepositoryProvider.of<AuthService>(context).user!.name
+                  //     : "",
+                  ),
             ),
         ],
       ),

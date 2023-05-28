@@ -1,3 +1,4 @@
+import 'package:admin/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,16 +43,22 @@ class _SignInScreen extends State<SignInScreen> {
                     height: 20,
                   ),
                   const Text(
-                    'Login',
+                    'Welcome in Hospital Dashboard',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('Please login to safely continue your experience'),
+                  const Text(
+                    'Please login to safely continue your experience',
+                    style: TextStyle(
+                      color: Colors.black, // Set the text color to black
+                    ),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -97,7 +104,7 @@ class _SignInScreen extends State<SignInScreen> {
                         _passwordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: Colors.grey,
+                        color: Colors.black,
                       ),
                     ),
                     obscureText: _passwordVisible ? false : true,
@@ -110,23 +117,9 @@ class _SignInScreen extends State<SignInScreen> {
                       return null;
                     },
                   ),
-                  // const SizedBox(
-                  //   height: 30,
-                  // ),
                   const SizedBox(
                     height: 30,
                     width: double.infinity,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'ForgetPassword');
-                    },
-                    child: const Text(
-                      'Forgot the password?',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -183,7 +176,7 @@ class _SignInScreen extends State<SignInScreen> {
                             ),
                             child: state is AuthLoading
                                 ? const CircularProgressIndicator(
-                                    color: Colors.white,
+                                    color: primaryColor,
                                   )
                                 : const Text('Continue'),
                           );

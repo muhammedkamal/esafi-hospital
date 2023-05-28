@@ -128,7 +128,7 @@ class RequestsScreen extends StatelessWidget {
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.visibility,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ],

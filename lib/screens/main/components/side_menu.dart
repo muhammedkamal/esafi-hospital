@@ -26,11 +26,11 @@ class _SideMenuState extends State<SideMenu> {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
+            child: Image.asset("assets/images/reg_logo.png"),
           ),
           DrawerListTile(
-            title: "Dashboard",
-            svgSrc: "assets/icons/menu_dashbord.svg",
+            title: "Requests",
+            svgSrc: "assets/icons/requests.svg",
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(0);
             },
@@ -39,8 +39,8 @@ class _SideMenuState extends State<SideMenu> {
             height: defaultPadding,
           ),
           DrawerListTile(
-            title: "Admins",
-            svgSrc: "assets/icons/menu_profile.svg",
+            title: "Hospital Empolyees",
+            svgSrc: "assets/icons/admins.svg",
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(1);
             },
@@ -50,7 +50,7 @@ class _SideMenuState extends State<SideMenu> {
           ),
           DrawerListTile(
             title: "Drivers", //awaad
-            svgSrc: "assets/icons/menu_task.svg",
+            svgSrc: "assets/icons/admins.svg",
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(2);
             },
@@ -60,7 +60,7 @@ class _SideMenuState extends State<SideMenu> {
           ),
           DrawerListTile(
             title: "Ambulances", //awaad
-            svgSrc: "assets/icons/menu_doc.svg",
+            svgSrc: "assets/icons/admins.svg",
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(3);
             },
@@ -68,31 +68,64 @@ class _SideMenuState extends State<SideMenu> {
           SizedBox(
             height: defaultPadding,
           ),
+
+          //ERROR: change design or try with package
           DrawerListTile(
             title: "Change Password",
-            svgSrc: "assets/icons/menu_setting.svg",
+            svgSrc: "assets/icons/password.svg",
             press: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('ChangePassword'),
-                    content: Form(
+                    backgroundColor: Color.fromARGB(255, 56, 49, 49),
+                    title: Text(
+                      'Change Password',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    content: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          SizedBox(height: 16.0),
                           TextFormField(
                             controller: _oldController,
-                            decoration:
-                                InputDecoration(labelText: 'old Password'),
+                            decoration: InputDecoration(
+                              focusColor: Colors.grey,
+                              labelText: 'Old Password',
+                              hintText: 'Old Password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                            ),
+                            obscureText: true,
                           ),
+                          SizedBox(height: 16.0),
                           TextFormField(
                             controller: _newController,
-                            decoration:
-                                InputDecoration(labelText: 'New Password'),
+                            decoration: InputDecoration(
+                              labelText: 'New Password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                            ),
+                            obscureText: true,
                           ),
+                          SizedBox(height: 16.0),
                         ],
                       ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
                     actions: [
                       ElevatedButton(
@@ -125,7 +158,22 @@ class _SideMenuState extends State<SideMenu> {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : Text('Save'),
+                            : Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 10.0,
+                          ),
+                        ),
                       ),
                       if (!isLoading)
                         ElevatedButton(
@@ -136,7 +184,26 @@ class _SideMenuState extends State<SideMenu> {
                               ? Center(
                                   child: CircularProgressIndicator(),
                                 )
-                              : Text('Cancel'),
+                              : TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                              vertical: 10.0,
+                            ),
+                          ),
                         ),
                     ],
                   );
@@ -149,7 +216,7 @@ class _SideMenuState extends State<SideMenu> {
           ),
           DrawerListTile(
             title: "Logout",
-            svgSrc: "assets/icons/menu_setting.svg",
+            svgSrc: "assets/icons/logout.svg",
             press: () {},
           ),
         ],
@@ -177,12 +244,12 @@ class DrawerListTile extends StatelessWidget {
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
         svgSrc,
-        color: Colors.white54,
+        color: Colors.black,
         height: 16,
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white54),
+        style: TextStyle(color: Colors.black),
       ),
     );
   }
