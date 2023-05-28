@@ -26,9 +26,9 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
-  <title>admin</title>
+  <title>Esaafi Admin Panel</title>
   <link rel="manifest" href="manifest.json">
   <!-- Styling for loading indicator -->
   <style>
@@ -39,8 +39,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #000;
+  background: #ffffff;
   z-index: 9999;
+  display: inline-block;
+  text-align: center;
 }
 .loading-text {
   position: absolute;
@@ -57,7 +59,7 @@
 .loading-text span {
   display: inline-block;
   margin: 0 5px;
-  color: #fff;
+  color: #EE2D24;
   font-family: 'Quattrocento Sans', sans-serif;
 }
 .loading-text span:nth-child(1) {
@@ -88,6 +90,15 @@
   filter: blur(0px);
   animation: blur-text 1.5s 1.2s infinite linear alternate;
 }
+.image-logo{
+  position: absolute;
+  top: 0;
+  bottom: 150px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+}
 @keyframes blur-text {
   0% {
     filter: blur(0px);
@@ -104,6 +115,7 @@
 <body>
   <!-- Loading Indicator -->
   <div class="loading">
+    <img class="image-logo" src="assets\images\favicon.png" alt="Loading..." style="width:52.76px; height: 74.4px">
     <div class="loading-text">
       <span class="loading-text-words">L</span>
       <span class="loading-text-words">O</span>
