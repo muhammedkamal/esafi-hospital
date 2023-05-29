@@ -6,18 +6,18 @@ import '../../../global/data/models/hospitals.dart';
 import '../../logic/block/ambulance_block.dart';
 import '../../logic/block/ambulance_event.dart';
 
-
 class SingleAmbulanceScreen extends StatelessWidget {
-  final Ambulance ambulance; // add the 'admin' named parameter
+  final Ambulance ambulance; // add the 'ambulance' named parameter
 
-  const SingleAmbulanceScreen({Key? key, required this.ambulance}) : super(key: key);
+  const SingleAmbulanceScreen({Key? key, required this.ambulance})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // build the widget using the 'admin' parameter
+    // build the widget using the 'ambulance' parameter
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Ambulance'),
+        title: Text('View Ambulance'),
       ),
       body: Center(
         child: Column(
