@@ -1,3 +1,4 @@
+import 'package:admin/driver/data/model/driver.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Hospital {
@@ -13,7 +14,7 @@ class Hospital {
     required this.name,
     required this.phoneNumber,
     this.location,
-    // required this.employees,
+    required this.employees,
   });
 
   factory Hospital.fromMap(Map<String, dynamic> data) {
@@ -22,7 +23,7 @@ class Hospital {
       name: data['name'],
       phoneNumber: data['phoneNumber'],
       location: data['location'],
-      // employees: data['employees'],
+      employees: data['employees'],
     );
   }
   factory Hospital.fromSnapshot(DocumentSnapshot snapshot) {
@@ -38,7 +39,7 @@ class Hospital {
       'name': name,
       'phoneNumber': phoneNumber,
       'location': location,
-      // 'employee': employees,
+      'employee': employees,
     };
   }
 }
@@ -47,18 +48,19 @@ class HospitalEmployee {
   final String id;
   String name;
   String? phoneNumber;
-  String? email;
+  String email;
   String hospitalId;
 
   HospitalEmployee({
     required this.id,
     required this.name,
-    required this.phoneNumber,
+    this.phoneNumber,
     required this.email,
     required this.hospitalId,
   });
 
   factory HospitalEmployee.fromMap(Map<String, dynamic> data) {
+    print(data);
     return HospitalEmployee(
       id: data['uid'],
       name: data['name'],
@@ -85,70 +87,24 @@ class HospitalEmployee {
   }
 }
 
-class AmbulanceDriver {
-  final String id;
-  String name;
-  String phoneNumber;
-  String? email;
-  String hospitalId;
-  String? ambulanceId;
-
-  AmbulanceDriver({
-    required this.id,
-    required this.name,
-    required this.phoneNumber,
-    required this.email,
-    required this.hospitalId,
-    this.ambulanceId,
-  });
-
-  factory AmbulanceDriver.fromMap(Map<String, dynamic> data) {
-    return AmbulanceDriver(
-      id: data['uid'],
-      name: data['name'],
-      phoneNumber: data['phoneNumber'],
-      email: data['email'],
-      hospitalId: data['hospitalId'],
-      ambulanceId: data['ambulanceId'],
-    );
-  }
-
-  factory AmbulanceDriver.fromSnapshot(DocumentSnapshot snapshot) {
-    final Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    data['uid'] = snapshot.id;
-    return AmbulanceDriver.fromMap(data);
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'hospitalId': hospitalId,
-      'ambulanceId': ambulanceId,
-    };
-  }
-}
-
 class Ambulance {
   String id;
   GeoPoint? currentPosition;
   String hospitalId;
-  String driverId;
+  String? driverId;
   Ambulance({
     required this.id,
-    required this.currentPosition,
-    required this.driverId,
+    this.currentPosition,
+    this.driverId,
     required this.hospitalId,
   });
 
   // serilzation
   factory Ambulance.fromMap(Map<String, dynamic> data) {
+    print("Ambulance ----------------> $data");
     return Ambulance(
       id: data['id'],
-      currentPosition: data['position'] != null
-          ? GeoPoint(data['poistion'].latitude, data['poistion'].longitude)
-          : null,
+      currentPosition: data['position'],
       driverId: data['driverId'],
       hospitalId: data['hospitalId'],
     );

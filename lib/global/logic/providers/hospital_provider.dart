@@ -3,6 +3,7 @@ import 'package:admin/global/utlis/helpers/firestore_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../driver/data/model/driver.dart';
 import '../../data/models/hospitals.dart';
 
 class HospitalsProvider {
@@ -18,6 +19,9 @@ class HospitalsProvider {
   Future<Hospital> getHospital(String hospitalId) async {
     DocumentSnapshot hospitalSnap =
         await FirestoreHelper.getDocumentByIdFuture('hospitals', hospitalId);
+    print("----------------> here is the hospo");
+    print(hospitalId);
+    print(hospitalSnap.data() as Map<String, dynamic>);
     hospital = Hospital.fromSnapshot(hospitalSnap);
     // get hospital employees
     QuerySnapshot employeesSnaps =
@@ -71,8 +75,9 @@ class HospitalsProvider {
   }
 
   Future<void> addAmbulanceToHospital(Map<String, dynamic> data) async {
-    await FirestoreHelper.addDocument('ambulances', data);
-    hospital = await getHospital(hospital!.id);
+    print(data);
+    await FirestoreHelper.addDocumentWithId('ambulances', data['id'], data);
+    hospital = await getHospital(data['hospitalId']);
     return;
   }
 
@@ -89,10 +94,5 @@ class HospitalsProvider {
         'hospitals_empolyees', _userCredential.user!.uid, data);
     hospital = await getHospital(hospital!.id);
     return;
-  }
-
-  void add(addAmbulanceToHospital) {
-    
-
   }
 }

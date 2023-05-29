@@ -1,3 +1,4 @@
+import 'package:admin/ambulance/logic/block/ambulance_block.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,10 @@ import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
 import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
+import '../../logic/block/ambulance_block.dart';
+import '../../logic/block/ambulance_event.dart';
+import 'single_ambulance_screen.dart';
+import 'update_single_ambulance_screen.dart';
 
 class AmbulanceScreen extends StatefulWidget {
   const AmbulanceScreen({Key? key}) : super(key: key);
@@ -36,14 +41,75 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                 : TableContainer(
                     headerTrailing: ElevatedButton.icon(
                       onPressed: () {
-                        BlocProvider.of<SingleHospitalCubit>(context)
-                            .addAmbulanceToHospital({
-                          "hospitalId": state.hospital!.id,
-                          "email": "ts@rt.bg",
-                          "password": "12345678",
-                          "phoneNumber": "12345678",
-                          "name": "test",
-                        });
+                        // data['Position'] = value;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Add New Ambulance'),
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'DriverID'),
+                                      onChanged: (value) {
+                                        data['DriverID'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: 'CarNum'),
+                                      onChanged: (value) {
+                                        data['CarNum'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Position-lat'),
+                                      onChanged: (value) {
+                                        data['lat'] = value;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Position-long'),
+                                      onChanged: (value) {
+                                        data['long'] = value;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await BlocProvider.of<SingleHospitalCubit>(
+                                            context)
+                                        .addAmbulanceToHospital({
+                                      "hospitalId": state.hospital!.id,
+                                      "driverId": data['DriverID'],
+                                      "id": data['CarNum'],
+                                      "position": GeoPoint(
+                                          double.parse(data['lat']),
+                                          double.parse(data['long'])),
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Add'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       icon: Icon(Icons.add),
                       label: Text("Add Ambulance"),
@@ -71,12 +137,17 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                         state.hospital!.ambulances!.length,
                         (index) => DataRow(
                           cells: [
-                            DataCell(
-                                Text(state.hospital!.ambulances![index].id)),
+                            DataCell(Text(
+                                state.hospital!.ambulances![index].driverId ??
+                                    "-")),
                             DataCell(
                               Text(
-                                state.hospital!.ambulances![index].hospitalId,
+                                state.hospital!.ambulances![index].id,
                               ),
+                            ),
+                            DataCell(
+                              Text(state
+                                  .hospital!.ambulances![index].hospitalId),
                             ),
                             DataCell(
                               Text(
@@ -87,78 +158,82 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                               ),
                             ),
                             DataCell(
-                              Text(state.hospital!.ambulances![index].driverId),
-                            ),
-                            DataCell(Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () {
-                                    // data['Position'] = value;
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Add New Ambulance'),
-                                          content: Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Driver Id'),
-                                                  onChanged: (value) {
-                                                    data['Driver Id'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Car Num.'),
-                                                  onChanged: (value) {
-                                                    data['Car Num.'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Hospital'),
-                                                  onChanged: (value) {
-                                                    data['Hospital'] = value;
-                                                  },
-                                                ),
-                                                TextFormField(
-                                                  decoration: InputDecoration(
-                                                      labelText: 'Position'),
-                                                  onChanged: (value) {},
-                                                ),
-                                              ],
-                                            ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleAmbulanceScreen(
+                                                  ambulance: state.hospital!
+                                                      .ambulances![index]),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.remove_red_eye,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateAmbulanceScreen(
+                                                  ambulance: state.hospital!
+                                                      .ambulances![index]),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                          title: Text("Delete Ambulance"),
+                                          content: Text(
+                                            'Are you sure you want to delete this ambulance?',
                                           ),
                                           actions: [
-                                            ElevatedButton(
+                                            TextButton(
                                               onPressed: () {
-                                                RepositoryProvider.of<
-                                                            HospitalsProvider>(
-                                                        context)
-                                                    .add((data));
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Add'),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
                                               },
                                               child: Text('Cancel'),
                                             ),
+                                            TextButton(
+                                              onPressed: () {
+                                                BlocProvider.of<AmbulancesBloc>(
+                                                        context)
+                                                    .add(
+                                                  DeleteAmbulances(state
+                                                      .hospital!
+                                                      .ambulances![index]
+                                                      .id),
+                                                );
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('Delete'),
+                                            ),
                                           ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
-                            ))
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/driver/logic/bloc/driver_bloc.dart';
 import 'package:admin/global/logic/blocs/auth/auth_bloc.dart';
 import 'package:admin/global/logic/cubits/hospital/single_hospital_cubit.dart';
 import 'package:admin/global/services/auth_service.dart';
@@ -10,10 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-//commit
+import 'ambulance/logic/block/ambulance_block.dart';
 import 'firebase_options.dart';
 import 'global/logic/cubits/screens_handler/screens_handler_cubit.dart';
 import 'global/presentation/screens/sign_in_screen.dart';
+import 'hospitalemployee/logic/block/hospital-employe-block.dart';
 
 void main() async {
   await Firebase.initializeApp(
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => AuthBloc(
               RepositoryProvider.of<AuthService>(context),
-            ),
+            )..add(CheckAuth()),
           ),
           BlocProvider(
             create: (context) => SingleHospitalCubit(),
@@ -44,9 +46,16 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => RequestsHandlerCubit(),
           ),
+          BlocProvider(
+            create: (context) => DriverBloc(),
+          ),
+          BlocProvider(
+            create: (context) => AmbulancesBloc(),
+          ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
+            print(state);
             if (state is Authenticated) {
               BlocProvider.of<SingleHospitalCubit>(context)
                   .getHospital(state.user.hospitalId!);
@@ -55,9 +64,12 @@ class MyApp extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            if (state is AuthInitial) {
+              BlocProvider.of<AuthBloc>(context).add(CheckAuth());
+            }
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Esaafi Hospital  Panel',
+              title: 'Esaafi Hospital Panel',
               theme: ThemeData.dark().copyWith(
                 scaffoldBackgroundColor: bgColor,
                 textTheme:

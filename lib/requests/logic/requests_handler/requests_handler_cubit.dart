@@ -20,7 +20,7 @@ class RequestsHandlerCubit extends Cubit<RequestsHandlerState> {
             'ambulance_requests', 'status', 'pending')
         .listen((event) async {
       requests = await RequestsProvider().getRequests(hospitalId);
-      print(requests);
+      // print(requests);
       event.docs
           .map((e) => AmbulanceRequest.fromFirestore(e))
           .forEach((element) {

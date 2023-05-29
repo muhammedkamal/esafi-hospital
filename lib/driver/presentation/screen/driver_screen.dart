@@ -1,12 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
+import '../../../constants.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
+import '../../../responsive.dart';
+import '../../logic/bloc/driver_bloc.dart';
 
-class DriverScreen extends StatelessWidget {
+class DriverScreen extends StatefulWidget {
   const DriverScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DriverScreen> createState() => _DriverScreenState();
+}
+
+class _DriverScreenState extends State<DriverScreen> {
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> data = {};
 
   @override
   Widget build(BuildContext context) {
@@ -16,72 +27,192 @@ class DriverScreen extends StatelessWidget {
       },
       title: 'Drivers',
       widgets: [
-        BlocBuilder<SingleHospitalCubit, SingleHospitalState>(
+        BlocBuilder<DriverBloc, DriverState>(
           builder: (context, state) {
-            return state.hospital == null
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.red,
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical: defaultPadding /
+                          (Responsive.isMobile(context) ? 2 : 1),
                     ),
-                  )
-                : TableContainer(
-                    headerTrailing: ElevatedButton.icon(
-                      onPressed: () {
-                        BlocProvider.of<SingleHospitalCubit>(context)
-                            .addDriverToHospital({
-                          "hospitalId": state.hospital!.id,
-                          "email": "ts@rt.bg",
-                          "password": "12345678",
-                          "phoneNumber": "12345678",
-                          "name": "test",
-                        });
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Add New Driver'),
+                          content: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Name'),
+                                  onChanged: (value) {
+                                    data['name'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Phone Number'),
+                                  onChanged: (value) {
+                                    data['phoneNumber'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Email'),
+                                  onChanged: (value) {
+                                    data['Email'] = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: 'Password'),
+                                  onChanged: (value) {
+                                    data['Password'] = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<DriverBloc>(context)
+                                    .add(AddDriver(data));
+                                Navigator.of(context).pop();
+                                // bool isloading = true;
+                              },
+                              child: Text('Add'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel'),
+                            ),
+                          ],
+                        );
                       },
-                      icon: Icon(Icons.add),
-                      label: Text("Add Driver"),
-                    ),
-                    title: 'Drivers',
-                    table: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text('Name'),
-                        ),
-                        DataColumn(
-                          label: Text('Phone'),
-                        ),
-                        DataColumn(
-                          label: Text('Email'),
-                        ),
-                        DataColumn(
-                          label: Text('Ambulance Id'), //edit
-                        ),
-                        DataColumn(
-                          label: Text('Action'),
-                        ),
-                      ],
-                      rows: List.generate(
-                        state.hospital!.drivers!.length,
-                        (index) => DataRow(cells: [
-                          DataCell(Text(state.hospital!.drivers![index].name)),
-                          DataCell(
-                            Text(
-                              state.hospital!.drivers![index].phoneNumber,
-                            ),
-                          ),
-                          DataCell(
-                            Text(
-                              state.hospital!.drivers![index].email ?? "-",
-                            ),
-                          ),
-                          DataCell(Text(
-                              state.hospital!.drivers![index].ambulanceId ??
-                                  "-")),
-                          DataCell(Text(state.hospital!.drivers![index].id)),
-                        ]),
-                      ),
-                    ),
-                  );
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add,
+                  ),
+                  label: Text("Add New Driver"),
+                ),
+              ],
+            );
           },
         ),
+        SizedBox(
+          height: defaultPadding,
+        ),
+        BlocBuilder<DriverBloc, DriverState>(
+          builder: (context, state) {
+            if (state is DriverInitial) {
+              BlocProvider.of<DriverBloc>(context).add(LoadDriver());
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is DriverLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Colors.red,
+                ),
+              );
+            } else if (state is DriverLoaded) {
+              print(state.driver);
+              return TableContainer(
+                title: "Drivers",
+                table: DataTable(
+                  columnSpacing: defaultPadding,
+                  //minWidth: 600,
+                  columns: [
+                    DataColumn(
+                      label: Text("Driver ID"),
+                    ),
+                    DataColumn(
+                      label: Text("Hospital ID"),
+                    ),
+                    DataColumn(
+                      label: Text("Name"),
+                    ),
+                    DataColumn(
+                      label: Text("Phone Number"),
+                    ),
+                    DataColumn(label: Text('Actions')),
+                  ],
+                  rows: List.generate(
+                    state.driver.length,
+                    (index) => DataRow(
+                      cells: [
+                        DataCell(Text(state.driver[index].id)),
+                        DataCell(Text(state.driver[index].ambulanceId ?? "-")),
+                        DataCell(Text(state.driver[index].hospitalId)),
+                        DataCell(Text(state.driver[index].name)),
+                        DataCell(
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      title: Text('Delete Hospitals'),
+                                      content: Text(
+                                          'Are you sure you want to delete this Hospitals?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            BlocProvider.of<DriverBloc>(context)
+                                                .add(DeleteDriver(
+                                                    state.driver[index].id));
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Delete'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+            return Placeholder();
+          },
+        )
       ],
     );
   }

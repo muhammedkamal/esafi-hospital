@@ -1,4 +1,6 @@
 import 'package:admin/constants.dart';
+import 'package:admin/global/logic/blocs/auth/auth_bloc.dart';
+import 'package:admin/global/presentation/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,8 +31,13 @@ class _SideMenuState extends State<SideMenu> {
             child: Image.asset("assets/images/reg_logo.png"),
           ),
           DrawerListTile(
+<<<<<<< HEAD
             title: "Requests",
             svgSrc: "assets/icons/requests.svg",
+=======
+            title: "Request",
+            svgSrc: "assets/icons/menu_dashbord.svg",
+>>>>>>> bf60b4e18b5de867376d3c3d5677111f43c8437e
             press: () {
               BlocProvider.of<ScreenHandlerCubit>(context).changeScreen(0);
             },
@@ -216,8 +223,17 @@ class _SideMenuState extends State<SideMenu> {
           ),
           DrawerListTile(
             title: "Logout",
+<<<<<<< HEAD
             svgSrc: "assets/icons/logout.svg",
             press: () {},
+=======
+            svgSrc: "assets/icons/menu_setting.svg",
+            press: () {
+              BlocProvider.of<AuthBloc>(context).add(SignOut());
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignInScreen()));
+            },
+>>>>>>> bf60b4e18b5de867376d3c3d5677111f43c8437e
           ),
         ],
       ),

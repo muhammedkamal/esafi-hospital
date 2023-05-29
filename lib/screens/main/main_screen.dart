@@ -1,6 +1,6 @@
 import 'package:admin/controllers/MenuAppController.dart';
+import 'package:admin/global/services/auth_service.dart';
 import 'package:admin/requests/presentations/screens/requests_Screen.dart';
-
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +10,7 @@ import '../../ambulance/presentation/screen/ambulance_screen.dart';
 import '../../driver/presentation/screen/driver_screen.dart';
 
 import '../../global/logic/cubits/screens_handler/screens_handler_cubit.dart';
+import '../../hospitalemployee/presentation/screen/hospital-employee-screen.dart';
 import '../../requests/data/models/ambulance_request.dart';
 import '../../requests/logic/requests_handler/requests_handler_cubit.dart';
 import '../admins/admins_screen.dart';
@@ -19,7 +20,7 @@ import 'components/side_menu.dart';
 class MainScreen extends StatelessWidget {
   List<Widget> screens = [
     RequestsScreen(),
-    AdminScreen(),
+    HospitalEmployeeScreen(),
     DriverScreen(),
     AmbulanceScreen(),
   ];
@@ -37,12 +38,12 @@ class MainScreen extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return Container(
-                    color: Colors.white,
-                    height: 200,
-                    width: 300,
-                    child: Column(
+                  return AlertDialog(
+                    content: Column(
                       children: [
+                        //get data from user which is\
+                        //1. amulance id
+                        //2. set the hospital id
                         Text('Emergency Request'),
                         Text('id: ${request.id}'),
                         ElevatedButton(
@@ -51,7 +52,9 @@ class MainScreen extends StatelessWidget {
                                 .acceptRequest(
                                     request.id!,
                                     'cA3DwLyRnfUV6hRpm0SK',
-                                    'NTwiJZd0WAH9AWCIhLgf');
+                                    RepositoryProvider.of<AuthService>(context)
+                                        .user!
+                                        .hospitalId!);
                             Navigator.pop(context);
                           },
                           child: Text('Accept'),
