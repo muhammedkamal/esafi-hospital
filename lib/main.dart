@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'ambulance/logic/block/ambulance_block.dart';
 import 'firebase_options.dart';
 import 'global/logic/cubits/screens_handler/screens_handler_cubit.dart';
 import 'global/presentation/screens/sign_in_screen.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => DriverBloc(),
+          ),
+          BlocProvider(
+            create: (context) => AmbulancesBloc(),
           ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(

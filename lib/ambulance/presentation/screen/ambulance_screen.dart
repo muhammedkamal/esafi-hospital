@@ -1,3 +1,4 @@
+import 'package:admin/ambulance/logic/block/ambulance_block.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,10 @@ import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
 import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
+import '../../logic/block/ambulance_block.dart';
+import '../../logic/block/ambulance_event.dart';
+import 'single_ambulance_screen.dart';
+import 'update_single_ambulance_screen.dart';
 
 class AmbulanceScreen extends StatefulWidget {
   const AmbulanceScreen({Key? key}) : super(key: key);
@@ -141,9 +146,8 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                               ),
                             ),
                             DataCell(
-                              Text(state.hospital!.ambulances![index]
-                                      .hospitalId ??
-                                  "-"),
+                              Text(state
+                                  .hospital!.ambulances![index].hospitalId),
                             ),
                             DataCell(
                               Text(
@@ -153,14 +157,83 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                     "-",
                               ),
                             ),
-                            DataCell(Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ))
+                            DataCell(
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleAmbulanceScreen(
+                                                  ambulance: state.hospital!
+                                                      .ambulances![index]),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.remove_red_eye,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateAmbulanceScreen(
+                                                  ambulance: state.hospital!
+                                                      .ambulances![index]),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                          title: Text("Delete Ambulance"),
+                                          content: Text(
+                                            'Are you sure you want to delete this ambulance?',
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                BlocProvider.of<AmbulancesBloc>(
+                                                        context)
+                                                    .add(
+                                                  DeleteAmbulances(state
+                                                      .hospital!
+                                                      .ambulances![index]
+                                                      .id),
+                                                );
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('Delete'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
