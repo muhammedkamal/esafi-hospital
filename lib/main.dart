@@ -48,6 +48,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => DriverBloc(),
           ),
+          BlocProvider(
+            create: (context) => HospitalEmployeeBloc(),
+          ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
