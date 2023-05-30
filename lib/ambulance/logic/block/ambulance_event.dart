@@ -1,7 +1,6 @@
 import 'package:admin/global/data/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 
-// part of'ambulance_block.dart';
 
 
 abstract class AmbulancesEvent extends Equatable {
