@@ -5,6 +5,7 @@ import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+// import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../ambulance/presentation/screen/ambulance_screen.dart';
 import '../../driver/presentation/screen/driver_screen.dart';
@@ -28,12 +29,13 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<RequestsHandlerCubit, RequestsHandlerState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.requests != null && state.requests!.isNotEmpty) {
           final emergencyRequests = state.requests!.where((element) =>
               element.status == AmbulanceRequestStatus.pending &&
               element.type == AmbulanceRequestType.emergency);
           if (emergencyRequests.isNotEmpty) {
+            // old
             for (var request in emergencyRequests) {
               showDialog(
                 context: context,
@@ -73,6 +75,49 @@ class MainScreen extends StatelessWidget {
                 },
               );
             }
+            //secondly way
+            // for (var request in emergencyRequests) {
+            //   showDialog(
+            //     context: context,
+            //     builder: (_) => AlertDialog(
+            //       title: Text("Emergency Request"),
+            //       content: Column(children: [
+            //         Text('Number of Request: ${request.id}'),
+            //         Text('Location of Request: ${request.sourceLocation}'),
+            //         Text('This Request Created at: ${request.sourceLocation}'),
+            //         Text('This Request Created at: ${request.caseDetails}'),
+            //       ]),
+            //       actions: [
+            //         ElevatedButton(
+            //           child: Text("Decline Request",
+            //               style: TextStyle(color: Colors.white, fontSize: 18)),
+            //           onPressed: () {
+            //             BlocProvider.of<RequestsHandlerCubit>(context)
+            //                 .cancelRequest(request.id!);
+            //             Navigator.of(context, rootNavigator: true).pop();
+            //           },
+            //         ),
+            //         ElevatedButton(
+            //           child: Text("Accept Request",
+            //               style: TextStyle(color: Colors.white, fontSize: 18)),
+            //           onPressed: () {
+            //             BlocProvider.of<RequestsHandlerCubit>(context)
+            //                 .acceptRequest(
+            //               request.id!,
+            //               'cA3DwLyRnfUV6hRpm0SK',
+            //               RepositoryProvider.of<AuthService>(context)
+            //                   .user!
+            //                   .hospitalId!,
+            //             );
+            //             Navigator.of(context).pop();
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // }
+
+            // ===end ===
           }
         }
       },
@@ -106,4 +151,55 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
-// }
+
+// فقدت الامل فيها
+//third way with package but i delete it
+// bool alertShown = false;
+//           for (var request in emergencyRequests) {
+//             if (!alertShown) {
+//               var alert = Alert(
+//                 context: context,
+//                 type: AlertType.warning,
+//                 title: "Emergency Request",
+//                 desc:
+//                     "This is emergency request, Please accept or decline request in few minutes to save our Patient",
+//                 content: Column(children: [
+//                   Text('Number of Request: ${request.id}'),
+//                   Text('Location of Request: ${request.sourceLocation}'),
+//                   Text('This Request Created at: ${request.sourceLocation}'),
+//                   Text('This Request Created at: ${request.caseDetails}'),
+//                 ]),
+//                 buttons: [
+//                   DialogButton(
+//                     child: Text("Decline Request",
+//                         style: TextStyle(color: Colors.white, fontSize: 18)),
+//                     onPressed: () {
+//                       BlocProvider.of<RequestsHandlerCubit>(context)
+//                           .cancelRequest(request.id!);
+//                       Navigator.of(context, rootNavigator: true).pop();
+//                     },
+//                     color: Color.fromRGBO(92, 92, 92, 1),
+//                   ),
+//                   DialogButton(
+//                     child: Text("Accept Request",
+//                         style: TextStyle(color: Colors.white, fontSize: 18)),
+//                     onPressed: () {
+//                       BlocProvider.of<RequestsHandlerCubit>(context)
+//                           .acceptRequest(
+//                         request.id!,
+//                         'cA3DwLyRnfUV6hRpm0SK',
+//                         RepositoryProvider.of<AuthService>(context)
+//                             .user!
+//                             .hospitalId!,
+//                       );
+//                       Navigator.of(context).pop();
+//                     },
+//                     color: Color.fromRGBO(0, 179, 134, 1.0),
+//                   ),
+//                 ],
+//               );
+//               alert.show();
+//               alertShown = true;
+//             }
+//             break;
+//           }

@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Esaafi Hospital Panel',
-              theme: ThemeData.dark().copyWith(
+              theme: ThemeData.light().copyWith(
                 scaffoldBackgroundColor: bgColor,
                 textTheme:
                     GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
