@@ -1,3 +1,4 @@
+import 'package:admin/driver/data/model/driver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +10,10 @@ import '../../../responsive.dart';
 import '../../logic/bloc/driver_bloc.dart';
 
 class DriverScreen extends StatefulWidget {
-  const DriverScreen({Key? key}) : super(key: key);
-
+  const DriverScreen({
+    Key? key,
+  }) : super(key: key);
+  // final AmbulanceDriver hospitalId;
   @override
   State<DriverScreen> createState() => _DriverScreenState();
 }
@@ -29,6 +32,10 @@ class _DriverScreenState extends State<DriverScreen> {
       widgets: [
         BlocBuilder<DriverBloc, DriverState>(
           builder: (context, state) {
+            String name = '';
+            String phoneNumber = '';
+            String email = '';
+            String password = '';
             return Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -54,49 +61,48 @@ class _DriverScreenState extends State<DriverScreen> {
                                 TextFormField(
                                   decoration:
                                       InputDecoration(labelText: 'Name'),
-                                  onChanged: (value) {
-                                    data['name'] = value;
-                                  },
+                                  onChanged: (value) => name = value,
                                 ),
                                 TextFormField(
                                   decoration: InputDecoration(
                                       labelText: 'Phone Number'),
-                                  onChanged: (value) {
-                                    data['phoneNumber'] = value;
-                                  },
+                                  onChanged: (value) => phoneNumber = value,
                                 ),
                                 TextFormField(
                                   decoration:
                                       InputDecoration(labelText: 'Email'),
-                                  onChanged: (value) {
-                                    data['Email'] = value;
-                                  },
+                                  onChanged: (value) => email = value,
                                 ),
                                 TextFormField(
                                   decoration:
                                       InputDecoration(labelText: 'Password'),
-                                  onChanged: (value) {
-                                    data['Password'] = value;
-                                  },
+                                  onChanged: (value) => password = value,
                                 ),
                               ],
                             ),
                           ),
                           actions: [
-                            ElevatedButton(
+                            TextButton(
                               onPressed: () {
-                                BlocProvider.of<DriverBloc>(context)
-                                    .add(AddDriver(data));
-                                Navigator.of(context).pop();
-                                // bool isloading = true;
+                                Navigator.pop(context);
                               },
-                              child: Text('Add'),
+                              child: Text('Cancel'),
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                // var hospital;
+                                BlocProvider.of<DriverBloc>(context)
+                                    .createDriver({
+                                  // "hospitalId": hospital.id,
+                                  "email": email,
+                                  "password": password,
+                                  "phoneNumber": phoneNumber,
+                                  "name": name,
+                                });
+
+                                Navigator.pop(context);
                               },
-                              child: Text('Cancel'),
+                              child: Text('Add'),
                             ),
                           ],
                         );
@@ -155,9 +161,9 @@ class _DriverScreenState extends State<DriverScreen> {
                     (index) => DataRow(
                       cells: [
                         DataCell(Text(state.driver[index].id)),
-                        DataCell(Text(state.driver[index].ambulanceId ?? "-")),
                         DataCell(Text(state.driver[index].hospitalId)),
                         DataCell(Text(state.driver[index].name)),
+                        DataCell(Text(state.driver[index].phoneNumber)),
                         DataCell(
                           Row(
                             children: [
