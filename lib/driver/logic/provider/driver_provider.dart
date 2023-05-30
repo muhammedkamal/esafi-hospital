@@ -10,9 +10,13 @@ class DriverProvider {
   DriverProvider._internal();
 
   List<AmbulanceDriver> driver = [];
-  Future<List<AmbulanceDriver>> getDriver() async {
+  Future<List<AmbulanceDriver>> getDriver(String hospitalID) async {
     QuerySnapshot driverSnaps =
-        await FirestoreHelper.getDocumentsFuture('ambulance_drivers');
+        await FirestoreHelper.getDocumentsWithConditionFuture(
+      'ambulance_drivers',
+      'hospitalId',
+      hospitalID,
+    );
     driverSnaps.docs.forEach((element) {
       driver.add(AmbulanceDriver.fromSnapshot(element));
     });
@@ -27,8 +31,7 @@ class DriverProvider {
     await FirestoreHelper.updateDocument('ambulance_drivers', id, data);
   }
 
-
-    Future<void> createDriver(Map<String, dynamic> data) async {
+  Future<void> createDriver(Map<String, dynamic> data) async {
     String email = data['email'];
     String password = data['password'];
     data.remove('password');

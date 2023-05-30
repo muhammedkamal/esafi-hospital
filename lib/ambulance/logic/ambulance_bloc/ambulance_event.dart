@@ -1,8 +1,6 @@
 import 'package:admin/global/data/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 
-
-
 abstract class AmbulancesEvent extends Equatable {
   const AmbulancesEvent();
 
@@ -21,13 +19,11 @@ class DeleteAmbulances extends AmbulancesEvent {
   List<Object> get props => [uid];
 }
 
-class UpdateAmbulance extends AmbulancesEvent{
+class UpdateAmbulance extends AmbulancesEvent {
   final String id;
-  final Hospital updated;
+  final Ambulance updated;
 
   UpdateAmbulance(this.id, this.updated);
   @override
   List<Object> get props => [id, updated];
 }
-
-

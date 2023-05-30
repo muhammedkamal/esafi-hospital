@@ -1,4 +1,5 @@
 import 'package:admin/driver/data/model/driver.dart';
+import 'package:admin/global/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +94,11 @@ class _DriverScreenState extends State<DriverScreen> {
                                 // var hospital;
                                 BlocProvider.of<DriverBloc>(context)
                                     .createDriver({
-                                  // "hospitalId": hospital.id,
+                                  "hospitalId":
+                                      RepositoryProvider.of<AuthService>(
+                                              context)
+                                          .user!
+                                          .hospitalId!,
                                   "email": email,
                                   "password": password,
                                   "phoneNumber": phoneNumber,
@@ -124,7 +129,9 @@ class _DriverScreenState extends State<DriverScreen> {
         BlocBuilder<DriverBloc, DriverState>(
           builder: (context, state) {
             if (state is DriverInitial) {
-              BlocProvider.of<DriverBloc>(context).add(LoadDriver());
+              BlocProvider.of<DriverBloc>(context).add(LoadDriver(
+                RepositoryProvider.of<AuthService>(context).user!.hospitalId!,
+              ));
               return Center(
                 child: CircularProgressIndicator(),
               );

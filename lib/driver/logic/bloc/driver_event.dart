@@ -7,7 +7,11 @@ abstract class DriverEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadDriver extends DriverEvent {}
+class LoadDriver extends DriverEvent {
+  final String hospitalId;
+
+  LoadDriver(this.hospitalId);
+}
 
 class AddDriver extends DriverEvent {
   final Map<String, dynamic> data;

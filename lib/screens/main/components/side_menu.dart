@@ -71,7 +71,6 @@ class _SideMenuState extends State<SideMenu> {
           SizedBox(
             height: defaultPadding,
           ),
-
           DrawerListTile(
             title: "Change Password",
             svgSrc: "assets/icons/password.svg",
@@ -98,140 +97,286 @@ class _SideMenuState extends State<SideMenu> {
 
   Future<dynamic> UpdatePasswordDialogWidget(BuildContext context) {
     return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: bgColor,
-                  title: Text(
-                    'Change Password',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: _oldController,
-                          decoration: InputDecoration(
-                            focusColor: Colors.grey,
-                            labelText: 'Old Password',
-                            hintText: 'Old Password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: _newController,
-                          decoration: InputDecoration(
-                            labelText: 'New Password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 16.0),
-                      ],
-                    ),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        print("here");
-                        if (isLoading) {
-                          return;
-                        }
-                        setState(() {
-                          isLoading = true;
-                        });
-                        try {
-                          await RepositoryProvider.of<AuthService>(context)
-                              .ChangePassword(
-                                  _oldController.text, _newController.text);
-                          Navigator.of(context).pop();
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(e.toString()),
-                            ),
-                          );
-                        }
+        context: context,
+        builder: (BuildContext context) {
+          return ChangePasswordWidget();
+          //     return AlertDialog(
+          //       backgroundColor: bgColor,
+          //       title: Text(
+          //         'Change Password',
+          //         style: TextStyle(
+          //           fontSize: 20.0,
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       ),
+          //       content: SingleChildScrollView(
+          //         child: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             SizedBox(height: 16.0),
+          //             TextFormField(
+          //               controller: _oldController,
+          //               decoration: InputDecoration(
+          //                 focusColor: Colors.grey,
+          //                 labelText: 'Old Password',
+          //                 hintText: 'Old Password',
+          //                 border: OutlineInputBorder(
+          //                   borderSide: BorderSide(color: Colors.black),
+          //                 ),
+          //                 focusedBorder: OutlineInputBorder(
+          //                   borderSide: BorderSide(color: Colors.blue),
+          //                 ),
+          //               ),
+          //               obscureText: true,
+          //             ),
+          //             SizedBox(height: 16.0),
+          //             TextFormField(
+          //               controller: _newController,
+          //               decoration: InputDecoration(
+          //                 labelText: 'New Password',
+          //                 border: OutlineInputBorder(
+          //                   borderSide: BorderSide(color: Colors.black),
+          //                 ),
+          //                 focusedBorder: OutlineInputBorder(
+          //                   borderSide: BorderSide(color: Colors.blue),
+          //                 ),
+          //               ),
+          //               obscureText: true,
+          //             ),
+          //             SizedBox(height: 16.0),
+          //           ],
+          //         ),
+          //       ),
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(16.0),
+          //       ),
+          //       actions: [
+          //         ElevatedButton(
+          //           onPressed: () async {
+          //             print("here");
+          //             if (isLoading) {
+          //               return;
+          //             }
+          //             setState(() {
+          //               isLoading = true;
+          //             });
+          //             try {
+          //               await RepositoryProvider.of<AuthService>(context)
+          //                   .ChangePassword(_oldController.text, _newController.text);
+          //               Navigator.of(context).pop();
+          //             } catch (e) {
+          //               ScaffoldMessenger.of(context).showSnackBar(
+          //                 SnackBar(
+          //                   content: Text(e.toString()),
+          //                 ),
+          //               );
+          //             }
 
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                      child: isLoading
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Text(
-                              'Save',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
-                            ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 10.0,
-                        ),
+          //             setState(() {
+          //               isLoading = false;
+          //             });
+          //           },
+          //           child: isLoading
+          //               ? Center(
+          //                   child: CircularProgressIndicator(),
+          //                 )
+          //               : Text(
+          //                   'Save',
+          //                   style: TextStyle(
+          //                     fontSize: 16.0,
+          //                   ),
+          //                 ),
+          //           style: ElevatedButton.styleFrom(
+          //             backgroundColor: primaryColor,
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(8.0),
+          //             ),
+          //             padding: EdgeInsets.symmetric(
+          //               horizontal: 16.0,
+          //               vertical: 10.0,
+          //             ),
+          //           ),
+          //         ),
+          //         if (!isLoading)
+          //           ElevatedButton(
+          //             onPressed: () {
+          //               Navigator.of(context).pop();
+          //             },
+          //             child: isLoading
+          //                 ? Center(
+          //                     child: CircularProgressIndicator(),
+          //                   )
+          //                 : TextButton(
+          //                     onPressed: () => Navigator.pop(context),
+          //                     child: Text(
+          //                       'Cancel',
+          //                       style: TextStyle(
+          //                         color: Colors.grey[600],
+          //                         fontSize: 16.0,
+          //                       ),
+          //                     ),
+          //                   ),
+          //             style: ElevatedButton.styleFrom(
+          //               backgroundColor: Colors.grey,
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(8.0),
+          //               ),
+          //               padding: EdgeInsets.symmetric(
+          //                 horizontal: 16.0,
+          //                 vertical: 10.0,
+          //               ),
+          //             ),
+          //           ),
+          //       ],
+          //     );
+          //   },
+          // );
+        });
+  }
+}
+
+class ChangePasswordWidget extends StatefulWidget {
+  const ChangePasswordWidget({Key? key}) : super(key: key);
+
+  @override
+  State<ChangePasswordWidget> createState() => _ChangePasswordWidgetState();
+}
+
+class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
+  bool isLoading = false;
+  final TextEditingController _oldController = TextEditingController(),
+      _newController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: bgColor,
+      title: Text(
+        'Change Password',
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 16.0),
+            TextFormField(
+              controller: _oldController,
+              decoration: InputDecoration(
+                focusColor: Colors.grey,
+                labelText: 'Old Password',
+                hintText: 'Old Password',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              controller: _newController,
+              decoration: InputDecoration(
+                labelText: 'New Password',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+          ],
+        ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () async {
+            print("here");
+            if (isLoading) {
+              return;
+            }
+            setState(() {
+              isLoading = true;
+            });
+            try {
+              await RepositoryProvider.of<AuthService>(context)
+                  .ChangePassword(_oldController.text, _newController.text);
+              Navigator.of(context).pop();
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
+            }
+
+            setState(() {
+              isLoading = false;
+            });
+          },
+          child: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 10.0,
+            ),
+          ),
+        ),
+        if (!isLoading)
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 16.0,
                       ),
                     ),
-                    if (!isLoading)
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: isLoading
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 10.0,
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              },
-            );
+                  ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 10.0,
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }
 

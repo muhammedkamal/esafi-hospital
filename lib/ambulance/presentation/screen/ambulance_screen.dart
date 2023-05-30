@@ -1,14 +1,15 @@
-import 'package:admin/ambulance/logic/block/ambulance_block.dart';
+import 'package:admin/ambulance/logic/ambulance_bloc/ambulance_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants.dart';
 import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
 import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
-import '../../logic/block/ambulance_block.dart';
-import '../../logic/block/ambulance_event.dart';
+import '../../logic/ambulance_bloc/ambulance_bloc.dart';
+import '../../logic/ambulance_bloc/ambulance_event.dart';
 import 'single_ambulance_screen.dart';
 import 'update_single_ambulance_screen.dart';
 
@@ -116,6 +117,7 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                     ),
                     title: 'Ambulance',
                     table: DataTable(
+                      columnSpacing: 10,
                       columns: [
                         DataColumn(
                           label: Text('Driver Id'),

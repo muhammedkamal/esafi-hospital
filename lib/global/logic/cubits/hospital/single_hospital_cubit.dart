@@ -1,5 +1,5 @@
-import 'package:admin/ambulance/logic/block/ambulance_block.dart';
-import 'package:admin/ambulance/logic/block/ambulance_event.dart';
+import 'package:admin/ambulance/logic/ambulance_bloc/ambulance_bloc.dart';
+import 'package:admin/ambulance/logic/ambulance_bloc/ambulance_event.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';

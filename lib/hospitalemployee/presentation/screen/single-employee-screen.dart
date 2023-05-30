@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../global/data/models/hospitals.dart';
 
 class SingleEmployeeScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class SingleEmployeeScreen extends StatelessWidget {
           Expanded(
             flex: 1,
             child: SingleChildScrollView(
-              child: DataTable(columns: [
+              child: DataTable(columnSpacing: defaultPadding, columns: [
                 DataColumn(label: Text('Feild')),
                 DataColumn(label: Text('Data')),
               ], rows: [

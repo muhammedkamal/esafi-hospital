@@ -136,6 +136,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants.dart';
 import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
 import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
@@ -193,6 +194,7 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                     ),
                     title: 'Hospital Employee',
                     table: DataTable(
+                      columnSpacing: defaultPadding,
                       columns: [
                         DataColumn(
                           label: Text('ID'),
@@ -207,7 +209,10 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                           label: Text('Phone Number'),
                         ),
                         DataColumn(
-                          label: Text('Hospital ID'),
+                          label: Text(
+                            'Hospital ID',
+                            maxLines: 2,
+                          ),
                         ),
                         DataColumn(
                           label: Text('Actions'),
@@ -219,11 +224,6 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                           cells: [
                             DataCell(
                                 Text(state.hospital!.employees![index].id)),
-                            DataCell(
-                              Text(
-                                state.hospital!.employees![index].hospitalId,
-                              ),
-                            ),
                             DataCell(
                               Text(
                                 state.hospital!.employees![index].name,
@@ -239,6 +239,10 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                 state.hospital!.employees![index].phoneNumber ??
                                     "-",
                               ),
+                            ),
+                            DataCell(
+                              Text(
+                                  state.hospital!.employees![index].hospitalId),
                             ),
                             DataCell(Row(
                               children: [

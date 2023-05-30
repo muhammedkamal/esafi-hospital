@@ -8,9 +8,13 @@ class AmbulancesProvider {
 
   List<Ambulance> ambulances = [];
 
-  Future<List<Ambulance>> getAmbulances() async {
+  Future<List<Ambulance>> getAmbulances(String hospitalID) async {
     QuerySnapshot ambulancesSnaps =
-        await FirestoreHelper.getDocumentsFuture('ambulances');
+        await FirestoreHelper.getDocumentsWithConditionFuture(
+      'ambulances',
+      'hospitalId',
+      hospitalID,
+    );
     ambulancesSnaps.docs.forEach((element) {
       ambulances.add(Ambulance.fromSnapshot(element));
     });

@@ -116,4 +116,13 @@ class Ambulance {
     data['id'] = doc.id;
     return Ambulance.fromMap(data);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "position": currentPosition,
+      "driverId": driverId,
+      "hospitalId": "hospitalId",
+    };
+  }
 }

@@ -25,99 +25,104 @@ class MainScreen extends StatelessWidget {
     DriverScreen(),
     AmbulanceScreen(),
   ];
-
+  var emergencyRequests;
+  var dailog;
   @override
   Widget build(BuildContext context) {
+    print("build");
     return BlocListener<RequestsHandlerCubit, RequestsHandlerState>(
       listener: (context, state) async {
-        if (state.requests != null && state.requests!.isNotEmpty) {
-          final emergencyRequests = state.requests!.where((element) =>
+        print("listen");
+        if (state.requests != null &&
+            state.requests!.isNotEmpty &&
+            dailog == null &&
+            emergencyRequests == null) {
+          emergencyRequests = state.requests!.where((element) =>
               element.status == AmbulanceRequestStatus.pending &&
               element.type == AmbulanceRequestType.emergency);
           if (emergencyRequests.isNotEmpty) {
             // old
-            for (var request in emergencyRequests) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Column(
-                      children: [
-                        //get data from user which is\
-                        //1. amulance id
-                        //2. set the hospital id
-                        Text('Emergency Request'),
-                        Text('id: ${request.id}'),
-                        ElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<RequestsHandlerCubit>(context)
-                                .acceptRequest(
-                                    request.id!,
-                                    'cA3DwLyRnfUV6hRpm0SK',
-                                    RepositoryProvider.of<AuthService>(context)
-                                        .user!
-                                        .hospitalId!);
-                            Navigator.pop(context);
-                          },
-                          child: Text('Accept'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<RequestsHandlerCubit>(context)
-                                .cancelRequest(request.id!);
-                            Navigator.pop(context);
-                          },
-                          child: Text('Decline'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }
-            //secondly way
             // for (var request in emergencyRequests) {
             //   showDialog(
             //     context: context,
-            //     builder: (_) => AlertDialog(
-            //       title: Text("Emergency Request"),
-            //       content: Column(children: [
-            //         Text('Number of Request: ${request.id}'),
-            //         Text('Location of Request: ${request.sourceLocation}'),
-            //         Text('This Request Created at: ${request.sourceLocation}'),
-            //         Text('This Request Created at: ${request.caseDetails}'),
-            //       ]),
-            //       actions: [
-            //         ElevatedButton(
-            //           child: Text("Decline Request",
-            //               style: TextStyle(color: Colors.white, fontSize: 18)),
-            //           onPressed: () {
-            //             BlocProvider.of<RequestsHandlerCubit>(context)
-            //                 .cancelRequest(request.id!);
-            //             Navigator.of(context, rootNavigator: true).pop();
-            //           },
+            //     builder: (context) {
+            //       return AlertDialog(
+            //         content: Column(
+            //           children: [
+            //             //get data from user which is\
+            //             //1. amulance id
+            //             //2. set the hospital id
+            //             Text('Emergency Request'),
+            //             Text('id: ${request.id}'),
+            //             ElevatedButton(
+            //               onPressed: () {
+            //                 BlocProvider.of<RequestsHandlerCubit>(context)
+            //                     .acceptRequest(
+            //                         request.id!,
+            //                         'cA3DwLyRnfUV6hRpm0SK',
+            //                         RepositoryProvider.of<AuthService>(context)
+            //                             .user!
+            //                             .hospitalId!);
+            //                 Navigator.pop(context);
+            //               },
+            //               child: Text('Accept'),
+            //             ),
+            //             ElevatedButton(
+            //               onPressed: () {
+            //                 BlocProvider.of<RequestsHandlerCubit>(context)
+            //                     .cancelRequest(request.id!);
+            //                 Navigator.pop(context);
+            //               },
+            //               child: Text('Decline'),
+            //             ),
+            //           ],
             //         ),
-            //         ElevatedButton(
-            //           child: Text("Accept Request",
-            //               style: TextStyle(color: Colors.white, fontSize: 18)),
-            //           onPressed: () {
-            //             BlocProvider.of<RequestsHandlerCubit>(context)
-            //                 .acceptRequest(
-            //               request.id!,
-            //               'cA3DwLyRnfUV6hRpm0SK',
-            //               RepositoryProvider.of<AuthService>(context)
-            //                   .user!
-            //                   .hospitalId!,
-            //             );
-            //             Navigator.of(context).pop();
-            //           },
-            //         ),
-            //       ],
-            //     ),
+            //       );
+            //     },
             //   );
             // }
-
-            // ===end ===
+            // secondly way
+            print(emergencyRequests.length);
+            for (var request in emergencyRequests) {
+              dailog = showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text("Emergency Request"),
+                  content: Column(children: [
+                    Text('Number of Request: ${request.id}'),
+                    Text('Location of Request: ${request.sourceLocation}'),
+                    Text('This Request Created at: ${request.createdAt}'),
+                    Text('This Request Created at: ${request.caseDetails}'),
+                  ]),
+                  actions: [
+                    ElevatedButton(
+                      child: Text("Decline Request",
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                      onPressed: () {
+                        BlocProvider.of<RequestsHandlerCubit>(context)
+                            .cancelRequest(request.id!);
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                    ),
+                    ElevatedButton(
+                      child: Text("Accept Request",
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                      onPressed: () {
+                        BlocProvider.of<RequestsHandlerCubit>(context)
+                            .acceptRequest(
+                          request.id!,
+                          'cA3DwLyRnfUV6hRpm0SK', // get the ambulance id from the user
+                          RepositoryProvider.of<AuthService>(context)
+                              .user!
+                              .hospitalId!,
+                        );
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
           }
         }
       },

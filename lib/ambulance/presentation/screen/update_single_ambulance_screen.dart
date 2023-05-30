@@ -1,18 +1,14 @@
 import 'package:admin/global/data/models/hospitals.dart';
+import 'package:admin/global/logic/cubits/hospital/single_hospital_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../logic/block/ambulance_block.dart';
-import '../../logic/block/ambulance_event.dart';
-
-
-
+import '../../logic/ambulance_bloc/ambulance_bloc.dart';
+import '../../logic/ambulance_bloc/ambulance_event.dart';
 
 class UpdateAmbulanceScreen extends StatefulWidget {
   final Ambulance ambulance;
-
-
 
   UpdateAmbulanceScreen({required this.ambulance});
 
@@ -40,6 +36,7 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
     _driverId = ambulance.driverId;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,20 +71,20 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
                       },
                     ),
                     // initialValue: _Ambulance currentPosition,
-                    TextFormField(
-                      //GeoPoint? _currentPosition,
-                      decoration: InputDecoration(
-                        hintText: 'Enter ambulance current position',
-                        labelText: 'Current Position',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Current Position is required';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {},
-                    ),
+                    // TextFormField(
+                    //   //GeoPoint? _currentPosition,
+                    //   decoration: InputDecoration(
+                    //     hintText: 'Enter ambulance current position',
+                    //     labelText: 'Current Position',
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Current Position is required';
+                    //     }
+                    //     return null;
+                    //   },
+                    //   onSaved: (value) {},
+                    // ),
                     // initialValue: _hospital id,
                     TextFormField(
                       initialValue: _hospitalId,
@@ -120,7 +117,6 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
                       },
                       onSaved: (value) {
                         _driverId = value;
-                        
                       },
                     ),
                     SizedBox(
@@ -139,9 +135,11 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
                               );
 
                               BlocProvider.of<AmbulancesBloc>(context).add(
-                                  UpdateAmbulance(ambulance.id,
-                                      updateAmbulance as Hospital));
+                                  UpdateAmbulance(
+                                      ambulance.id, updateAmbulance));
                               Navigator.pop(context);
+                              BlocProvider.of<SingleHospitalCubit>(context)
+                                  .getHospital(ambulance.hospitalId);
                             }
                           },
                           child: Text('Save Changes')),
@@ -153,6 +151,4 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
           ),
         ));
   }
-
-
 }
