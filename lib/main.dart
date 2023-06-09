@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'ambulance/logic/ambulance_bloc/ambulance_bloc.dart';
 import 'firebase_options.dart';
 import 'global/logic/cubits/screens_handler/screens_handler_cubit.dart';
 import 'global/presentation/screens/sign_in_screen.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             create: (context) => DriverBloc(),
           ),
           BlocProvider(
-            create: (context) => HospitalEmployeeBloc(),
+            create: (context) => AmbulancesBloc(),
           ),
         ],
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -63,17 +64,18 @@ class MyApp extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            print(state);
             if (state is AuthInitial) {
               BlocProvider.of<AuthBloc>(context).add(CheckAuth());
             }
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Esaafi Hospital Panel',
-              theme: ThemeData.dark().copyWith(
+              theme: ThemeData.light().copyWith(
                 scaffoldBackgroundColor: bgColor,
                 textTheme:
                     GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-                        .apply(bodyColor: Colors.white),
+                        .apply(bodyColor: Colors.black),
                 canvasColor: secondaryColor,
               ),
               home: state is Authenticated

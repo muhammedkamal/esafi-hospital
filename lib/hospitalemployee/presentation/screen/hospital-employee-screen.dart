@@ -1,13 +1,17 @@
+import 'package:admin/hospitalemployee/logic/block/hospital-employe-event.dart';
 import 'package:admin/hospitalemployee/presentation/screen/single-employee-screen.dart';
+import 'package:admin/hospitalemployee/presentation/screen/update-employee-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants.dart';
 import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
+import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
 import '../../../global/services/auth_service.dart';
 import '../../logic/block/hospital-employe-block.dart';
-import '../../logic/block/hospital-employe-event.dart';
+
 
 class HospitalEmployeeScreen extends StatefulWidget {
   const HospitalEmployeeScreen({Key? key}) : super(key: key);
@@ -50,7 +54,7 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                       icon: Icon(Icons.add),
                       label: Text('Add hospital employee'),
                       onPressed: () {
-                         String name = '';
+                        String name = '';
                           String email = '';
                           String password = '';
                             String phoneNumber = '';
@@ -104,7 +108,6 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
             },
             child: Text('Cancel'),
           ),
-          
         ],
       );
     },
@@ -118,16 +121,14 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                     //       "password": "12345678",
                     //       "phoneNumber": "12345678",
                     //       "name": "test",
-
-                          
                     //     });
                     //    },
                     //   icon: Icon(Icons.add),
-                    //   label: Text("Add Employee"),  
+                    //   label: Text("Add Employee"),
                     // ),
-                    
                     title: 'Hospital Employee',
                     table: DataTable(
+                      columnSpacing: defaultPadding,
                       columns: [
                         // DataColumn(
                         //   label: Text('ID'),
@@ -142,7 +143,10 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                           label: Text('Phone Number'),
                         ),
                         DataColumn(
-                          label: Text('Hospital ID'),
+                          label: Text(
+                            'Hospital ID',
+                            maxLines: 2,
+                          ),
                         ),
                         DataColumn(
                           label: Text('Actions'),
@@ -154,11 +158,6 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                           cells: [
                             // DataCell(
                             //     Text(state.hospital!.employees![index].id)),
-                            DataCell(
-                              Text(
-                                state.hospital!.employees![index].hospitalId,
-                              ),
-                            ),
                             DataCell(
                               Text(
                                 state.hospital!.employees![index].name,
@@ -175,12 +174,17 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                     "-",
                               ),
                             ),
-                            DataCell(Row(
+                            DataCell(
+                              Text(
+                                  state.hospital!.employees![index].hospitalId),
+                            ),
+                            DataCell(
+                              Row(
                               children: [
                                 IconButton(
                                   icon: Icon(Icons.delete),
                                   onPressed: () {
-                                     showDialog(
+                                  showDialog(
                                           context: context,
                                           builder: (_) => AlertDialog(
                                             title: Text('Delete Hospitals'),
@@ -209,7 +213,40 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                           ),
                                         );
                                   }
-                                )
+                                ),
+                                 IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleEmployeeScreen(
+                                                  hospitalemployee: state.hospital!
+                                                      .employees![index]),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.remove_red_eye,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                    IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleEmployeeScreen(
+                                                  hospitalemployee: state.hospital!
+                                                      .employees![index]),
+                                        ),
+                                      );
+                                    },
+                                   icon:
+                                     Icon(
+                                      Icons.edit,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                               ]
                             )
                             )

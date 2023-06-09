@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
 
@@ -32,6 +33,7 @@ class RequestsScreen extends StatelessWidget {
                 : TableContainer(
                     title: 'Requests',
                     table: DataTable(
+                      columnSpacing: defaultPadding,
                       columns: [
                         DataColumn(
                           label: Text('ID'),
@@ -128,7 +130,7 @@ class RequestsScreen extends StatelessWidget {
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.visibility,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ],

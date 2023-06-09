@@ -11,3 +11,5 @@ abstract class SingleHospitalState {
 class SingleHospitalControlledState extends SingleHospitalState {
   SingleHospitalControlledState(Hospital? hospital) : super(hospital);
 }
+
+

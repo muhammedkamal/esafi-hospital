@@ -15,28 +15,33 @@ class DriverBloc extends Bloc<DriverEvent, DriverState> {
           if (event is LoadDriver) {
             emit(DriverLoading());
             List<AmbulanceDriver> driver =
-                await DriverProvider().getDriver();
+                await DriverProvider().getDriver(event.hospitalId);
             emit(DriverLoaded(driver));
-            } else if (event is DeleteDriver) {
+          } else if (event is DeleteDriver) {
             emit(DriverLoading());
             await DriverProvider().deleteDriver(event.id);
-            List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-            emit(DriverLoaded(driver));
+            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
+            // emit(DriverLoaded(driver));
           } else if (event is UpdateDriver) {
             emit(DriverLoading());
-            await DriverProvider().updateDriver(event.id, event.updated.toMap());
-            List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-            emit(DriverLoaded(driver));
-          }else if (event is AddDriver) {
-          emit(DriverLoading());
-          await DriverProvider().createDriver(event.data);
-          List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-          emit(DriverLoaded(driver));
-        }
+            await DriverProvider()
+                .updateDriver(event.id, event.updated.toMap());
+            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
+            // emit(DriverLoaded(driver));
+          } else if (event is AddDriver) {
+            emit(DriverLoading());
+            await DriverProvider().createDriver(event.data);
+            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
+            // emit(DriverLoaded(driver));
+          }
         } catch (e) {
           emit(DriverLoadingError(e.toString()));
         }
       },
     );
+  }
+
+  Future<void> createDriver(Map<String, dynamic> data) async {
+    await DriverProvider().createDriver(data);
   }
 }

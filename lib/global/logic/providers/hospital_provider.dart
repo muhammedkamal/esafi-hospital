@@ -41,7 +41,7 @@ class HospitalsProvider {
       'ambulance_drivers',
       'hospitalId',
       hospital!.id,
-    ); // create hospital in firebase
+    );
     print(driversSnaps);
 
     hospital!.drivers =
@@ -53,7 +53,7 @@ class HospitalsProvider {
       'ambulances',
       'hospitalId',
       hospital!.id,
-    ); // create hospital in firebase
+    );
     print(ambulancesSnaps);
 
     hospital!.ambulances =

@@ -37,7 +37,7 @@ class FirestoreHelper {
   }
 
   //get all documents as future
-  static Future<QuerySnapshot> getDocumentsFuture(String collection) async {
+  static Future<QuerySnapshot> getDocumentsFuture(String collection, String s, hospitalID) async {
     return await firestore.collection(collection).get();
   }
 
