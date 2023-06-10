@@ -303,15 +303,7 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                           actions: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                // BlocProvider.of<
-                                                //             SingleHospitalCubit>(
-                                                //         context)
-                                                //     .add(deleteEmployeeHospital(
-                                                //         state
-                                                //             .hospital!
-                                                //             .employees![index]
-                                                //             .id));
-
+                                                // add admin to hospital
                                                 Navigator.of(context).pop();
                                               },
                                               child: Text('Add'),
