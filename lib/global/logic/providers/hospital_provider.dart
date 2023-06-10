@@ -96,3 +96,7 @@ class HospitalsProvider {
     return;
   }
 }
+
+Future<void> deleteEmployeeHospital(String hospitalId) async {
+  await FirestoreHelper.deleteDocument('hospitals_empolyees', hospitalId);
+}

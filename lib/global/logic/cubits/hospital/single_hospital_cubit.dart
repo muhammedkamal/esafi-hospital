@@ -41,7 +41,8 @@ class SingleHospitalCubit extends Cubit<SingleHospitalState> {
 
   Future<void> addHospitalEmployee(Map<String, dynamic> data) async {
     await HospitalsProvider().addHospitalEmployee(data);
-    hospital!.drivers!.add(AmbulanceDriver.fromMap(data));
+    hospital!.employees!.add(HospitalEmployee.fromMap(data));
     emit(SingleHospitalControlledState(hospital!));
   }
+
 }
