@@ -82,6 +82,7 @@ class HospitalsProvider {
   }
 
   // add hospital employee
+
   Future<void> addHospitalEmployee(Map<String, dynamic> data) async {
     String email = data['email'];
     String password = data['password'];
