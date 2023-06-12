@@ -38,115 +38,107 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('UpdateAmbulanc'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Center(
-            child: SizedBox(
-              width: 1200,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // initialValue: _Ambulance id,
-                    TextFormField(
-                      initialValue: _id,
-                      decoration: InputDecoration(
-                        hintText: 'Enter ambulance id',
-                        labelText: 'Ambulance Id',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Ambulance id is required';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _id = value;
-                      },
-                    ),
-                    // initialValue: _Ambulance currentPosition,
-                    // TextFormField(
-                    //   //GeoPoint? _currentPosition,
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Enter ambulance current position',
-                    //     labelText: 'Current Position',
-                    //   ),
-                    //   validator: (value) {
-                    //     if (value == null || value.isEmpty) {
-                    //       return 'Current Position is required';
-                    //     }
-                    //     return null;
-                    //   },
-                    //   onSaved: (value) {},
-                    // ),
-                    // initialValue: _hospital id,
-                    TextFormField(
-                      initialValue: _hospitalId,
-                      decoration: InputDecoration(
-                        hintText: 'Enter hospital id',
-                        labelText: 'Hospital Id',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Hospital id is required';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _hospitalId = value;
-                      },
-                    ),
-                    // initialValue: _driver id,
-                    TextFormField(
-                      initialValue: _driverId,
-                      decoration: InputDecoration(
-                        hintText: 'Enter driver id',
-                        labelText: 'Driver Id',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Driver id is required';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _driverId = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              Ambulance updateAmbulance = Ambulance(
-                                id: ambulance.id,
-                                currentPosition: _currentPosition,
-                                hospitalId: _hospitalId!,
-                                driverId: _driverId!,
-                              );
-
-                              BlocProvider.of<AmbulancesBloc>(context).add(
-                                  UpdateAmbulance(
-                                      ambulance.id, updateAmbulance));
-                              Navigator.pop(context);
-                              BlocProvider.of<SingleHospitalCubit>(context)
-                                  .getHospital(ambulance.hospitalId);
-                            }
-                          },
-                          child: Text('Save Changes')),
-                    ),
-                  ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('Update Ambulance'),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 16),
+              Text(
+                'Ambulance ID:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
-            ),
+              TextFormField(
+                initialValue: _id,
+                decoration: InputDecoration(
+                  hintText: 'Enter Ambulance ID',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an Ambulance ID';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _id = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Hospital ID:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              TextFormField(
+                initialValue: _hospitalId,
+                decoration: InputDecoration(
+                  hintText: 'Enter Hospital ID',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a Hospital ID';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _hospitalId = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Driver ID:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              TextFormField(
+                initialValue: _driverId,
+                decoration: InputDecoration(
+                  hintText: 'Enter Driver ID (optional)',
+                ),
+                onSaved: (value) {
+                  _driverId = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      Ambulance updateAmbulance = Ambulance(
+                        id: ambulance.id,
+                        currentPosition: _currentPosition,
+                        hospitalId: _hospitalId!,
+                        driverId: _driverId!,
+                      );
+
+                      BlocProvider.of<AmbulancesBloc>(context)
+                          .add(UpdateAmbulance(ambulance.id, updateAmbulance));
+                      Navigator.pop(context);
+                      BlocProvider.of<SingleHospitalCubit>(context)
+                          .getHospital(ambulance.hospitalId);
+                    }
+                  },
+                  child: Text('Save Changes'),
+                ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

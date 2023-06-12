@@ -8,37 +8,27 @@ import 'package:admin/global/data/models/admin.dart';
 import '../../../global/data/models/hospitals.dart';
 import '../../logic/block/hospital-employe-block.dart';
 
-
 class UpdateEmployeeScreen extends StatefulWidget {
-  final HospitalEmployee employe;
+  final HospitalEmployee employee;
 
-  UpdateEmployeeScreen({required this.employe});
+  UpdateEmployeeScreen({required this.employee});
 
   @override
-  _UpdateEmployeeScreenState createState() => _UpdateEmployeeScreenState(employe);
+  _UpdateEmployeeScreenState createState() => _UpdateEmployeeScreenState();
 }
 
 class _UpdateEmployeeScreenState extends State<UpdateEmployeeScreen> {
   final _formKey = GlobalKey<FormState>();
-  final HospitalEmployee employe;
 
-  _UpdateEmployeeScreenState(this.employe);
-
-  String? _name;
-  String? _email;
-  String? _id;
-  String? _phoneNumber;
-  String? _hospitalId;
-
- 
+  late String _name;
+  late String _email;
+  late String _phoneNumber;
 
   @override
   void initState() {
-    _name = employe.name;
-    _email = employe.email;
-    _id = employe.id;
-    _phoneNumber = employe.phoneNumber;
-    _hospitalId = employe.hospitalId;
+    _name = widget.employee.name;
+    _email = widget.employee.email;
+    _phoneNumber = widget.employee.phoneNumber ?? '';
     super.initState();
   }
 
@@ -46,95 +36,119 @@ class _UpdateEmployeeScreenState extends State<UpdateEmployeeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Hospital Employee'),
+        backgroundColor: Colors.black,
+        title: Text('Update Employee'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(160),
-        child: Center(
-          child: SizedBox(
-            width: 1200,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    initialValue: _name,
-                    decoration: InputDecoration(
-                      hintText: 'Enter  Name',
-                      labelText: ' Name',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your Name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _name = value;
-                    },
-                  ),
-                  TextFormField(
-                     initialValue: _phoneNumber,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Phone Number',
-                      labelText: ' Phone Number',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your  Phone Number';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _phoneNumber = value;
-                      
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: _email,
-                    decoration: InputDecoration(
-                      hintText: 'Enter email',
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _email = value;
-                    },
-                  ),
-                  SizedBox(height: 16.0),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          Admin updatehospitalemployee = Admin(
-                            id: employe.id,
-                            name: _name!,
-                            email: _email!,
-
-                          );
-
-                          BlocProvider.of<HospitalEmployeeBloc>(context)
-                              .add(UpdateHospitalEmployee(
-                                employe.id, updatehospitalemployee as HospitalEmployee));
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Text('Save Changes'),
-                    ),
-                  ),
-                ],
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 16),
+              Text(
+                'Name:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
+              TextFormField(
+                initialValue: _name,
+                decoration: InputDecoration(
+                  hintText: 'Enter Name',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _name = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Email:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              TextFormField(
+                initialValue: _email,
+                decoration: InputDecoration(
+                  hintText: 'Enter Email',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an email';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _email = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Phone Number:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              TextFormField(
+                initialValue: _phoneNumber,
+                decoration: InputDecoration(
+                  hintText: 'Enter Phone Number',
+                ),
+                validator: (value) {
+                  if (value != null && value.isNotEmpty && !isNumeric(value)) {
+                    return 'Please enter a valid phone number';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _phoneNumber = value ?? '';
+                },
+              ),
+              SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      HospitalEmployee updatedEmployee = HospitalEmployee(
+                        id: widget.employee.id,
+                        name: _name,
+                        email: _email,
+                        phoneNumber:
+                            _phoneNumber.isNotEmpty ? _phoneNumber : null,
+                        hospitalId: widget.employee.hospitalId,
+                      );
+                      BlocProvider.of<HospitalEmployeeBloc>(context).add(
+                          UpdateHospitalEmployee(
+                              widget.employee.id, updatedEmployee));
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text('Save Changes'),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+}
+
+bool isNumeric(String? value) {
+  if (value == null) {
+    return false;
+  }
+  return double.tryParse(value) != null;
 }

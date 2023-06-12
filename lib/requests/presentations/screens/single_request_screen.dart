@@ -1,17 +1,19 @@
-import 'package:admin/driver/data/model/driver.dart';
 import 'package:flutter/material.dart';
 
-class SingleDriverScreen extends StatelessWidget {
-  final AmbulanceDriver driver;
+import '../../data/models/ambulance_request.dart';
 
-  const SingleDriverScreen({Key? key, required this.driver}) : super(key: key);
+class SingleRequestsScreen extends StatelessWidget {
+  final AmbulanceRequest request;
+
+  const SingleRequestsScreen({Key? key, required this.request})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Driver Details'),
+        title: Text('Request Details'),
       ),
       body: Container(
         padding: EdgeInsets.all(16),
@@ -20,38 +22,14 @@ class SingleDriverScreen extends StatelessWidget {
           children: [
             SizedBox(height: 16),
             Text(
-              'Driver Name:',
+              'Request ID:',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
             Text(
-              '${driver.name}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Email:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              '${driver.email}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Phone Number:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              '${driver.phoneNumber}',
+              '${request.id}',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
@@ -63,19 +41,55 @@ class SingleDriverScreen extends StatelessWidget {
               ),
             ),
             Text(
-              '${driver.hospitalId}',
+              '${request.hospitalId}',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
             Text(
-              'Driver ID:',
+              'User ID:',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
             Text(
-              '${driver.id}',
+              '${request.userId}',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Ambulance ID:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              '${request.ambulanceId}',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Created At:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              '${request.createdAt}',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Request Type:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              '${request.type}',
               style: TextStyle(fontSize: 16),
             ),
           ],

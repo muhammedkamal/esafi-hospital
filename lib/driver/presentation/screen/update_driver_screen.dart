@@ -40,13 +40,13 @@ class _UpdateDriverScreenState extends State<UpdateDriverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Update Driver'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(160),
+        padding: EdgeInsets.all(16),
         child: Center(
           child: SizedBox(
-            width: 1200,
             child: Form(
               key: _formKey,
               child: Column(
@@ -132,7 +132,7 @@ class _UpdateDriverScreenState extends State<UpdateDriverScreen> {
                       _id = value;
                     },
                   ),
-                  SizedBox(height: 16.0),
+                  SizedBox(height: 20.0),
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
