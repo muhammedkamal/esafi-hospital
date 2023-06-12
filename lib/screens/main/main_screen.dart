@@ -50,7 +50,11 @@ class MainScreen extends StatelessWidget {
                   title: Text("Emergency Request"),
                   content: Column(
                     children: [
-                      Image.asset('assets/images/emergency.png'),
+                      Image.asset(
+                        'assets/images/emergency.png',
+                        width: 200, // set the width of the image
+                        height: 200,
+                      ),
                       Text('Number of Request: ${request.id}'),
                       Text(
                           'Location of Request: ${request.destinationLocation}'),
