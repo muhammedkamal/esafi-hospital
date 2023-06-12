@@ -1,32 +1,39 @@
-//part of 'hospital_emplyee_bloc.dart';
-// import 'package:equatable/equatable.dart';
-// import '../../../global/data/models/hospitals.dart';
+import 'package:equatable/equatable.dart';
+import '../../../global/data/models/hospitals.dart';
 
-// abstract class HospitalEmployeeEvent extends Equatable {
-//   const HospitalEmployeeEvent();
+abstract class HospitalEmployeeEvent extends Equatable {
+  const HospitalEmployeeEvent();
 
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class LoadHospitalEmployee extends HospitalEmployeeEvent {}
+class LoadHospitalEmployee extends HospitalEmployeeEvent {}
 
-// class DeleteHospitalEmployee extends HospitalEmployeeEvent {
-//   final String id;
+class AddHospitalEmployee extends HospitalEmployeeEvent {
+  final Map<String, dynamic> data;
 
-//   DeleteHospitalEmployee(this.id);
+  AddHospitalEmployee(this.data);
 
-//   @override
-//   List<Object> get props => [id];
+  @override
+  List<Object> get props => [data];
+}
 
-// }
+class DeleteHospitalEmployee extends HospitalEmployeeEvent {
+  final String id;
 
-// class UpdateHospitalEmployee extends HospitalEmployeeEvent {
-//   final String id;
-//   final HospitalEmployee updated;
+  DeleteHospitalEmployee (this.id);
 
-//   UpdateHospitalEmployee(this.id, this.updated);
+  @override
+  List<Object> get props => [id];
+}
 
-//   @override
-//   List<Object> get props => [id, updated];
-// }
+class UpdateHospitalEmployee extends HospitalEmployeeEvent {
+  final String id;
+  final  HospitalEmployee updated ;
+
+  UpdateHospitalEmployee (this.id, this.updated);
+
+  @override
+  List<Object> get props => [id, updated];
+}
