@@ -1,9 +1,5 @@
 
-
 import 'package:flutter/material.dart';
-
-
-
 import '../../global/presentation/templets/main_ui_templete.dart';
 
 class AdminScreen extends StatelessWidget {

@@ -24,9 +24,9 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
   _UpdateAmbulanceScreenState(this.ambulance);
 
   String? _id;
-  GeoPoint? _currentPosition;
   String? _hospitalId;
   String? _driverId;
+  GeoPoint? _currentPosition;
 
   @override
   void initState() {
@@ -34,6 +34,7 @@ class _UpdateAmbulanceScreenState extends State<UpdateAmbulanceScreen> {
     _currentPosition = ambulance.currentPosition;
     _hospitalId = ambulance.hospitalId;
     _driverId = ambulance.driverId;
+
     super.initState();
   }
 
