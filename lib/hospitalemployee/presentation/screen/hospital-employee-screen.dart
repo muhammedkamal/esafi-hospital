@@ -131,14 +131,11 @@
 //     );
 //   }
 // }
-import 'package:admin/global/services/auth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants.dart';
 import '../../../global/logic/cubits/hospital/single_hospital_cubit.dart';
-import '../../../global/logic/providers/hospital_provider.dart';
 import '../../../global/presentation/components/table_container.dart';
 import '../../../global/presentation/templets/main_ui_templete.dart';
 

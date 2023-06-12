@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
-import '../../../global/services/auth_service.dart';
 
 class Header extends StatelessWidget {
   const Header({
