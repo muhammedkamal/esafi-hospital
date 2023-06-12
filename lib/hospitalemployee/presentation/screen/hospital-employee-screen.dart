@@ -322,9 +322,9 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                   showDialog(
                                           context: context,
                                           builder: (_) => AlertDialog(
-                                            title: Text('Delete Hospitals'),
+                                            title: Text('Delete Hospital Employee'),
                                             content: Text(
-                                                'Are you sure you want to delete this Hospitals?'),
+                                                'Are you sure you want to delete this Hospital Employee?'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
@@ -370,8 +370,8 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              SingleEmployeeScreen(
-                                                  hospitalemployee: state.hospital!
+                                              UpdateEmployeeScreen(
+                                                  employe: state.hospital!
                                                       .employees![index]),
                                         ),
                                       );
