@@ -122,7 +122,7 @@ class Ambulance {
       "id": id,
       "position": currentPosition,
       "driverId": driverId,
-      "hospitalId": "hospitalId",
+      "hospitalId": hospitalId,
     };
   }
 }

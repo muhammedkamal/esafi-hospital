@@ -35,7 +35,8 @@ class TableContainer extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            child: FittedBox(child: table),
+            // child: FittedBox(child: table),
+            child: table,
           ),
         ],
       ),

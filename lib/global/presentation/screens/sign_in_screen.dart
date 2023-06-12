@@ -249,6 +249,7 @@ class OutLinedTextFormField extends StatelessWidget {
           if (validator != null) {
             return validator!(value);
           }
+          return null;
         },
         onChanged: (value) {
           onChanged(value);

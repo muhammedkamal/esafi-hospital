@@ -21,7 +21,8 @@ class RequestsProvider {
   }
 
   Future<void> acceptRequest(
-      String requestId, String ambulanceId, String hospitalId) async {
+      String requestId, String ambulanceId, String hospitalId,
+      {bool emergency = false}) async {
     await FirestoreHelper.updateDocument(
         'ambulance_requests',
         requestId,
@@ -30,6 +31,8 @@ class RequestsProvider {
           'ambulanceId': ambulanceId,
           'hospitalId': hospitalId,
           'acceptedAt': Timestamp.now(),
+          if (emergency)
+            'destinationLocation': GeoPoint(30.1720679, 30.8179527),
         },
         merge: true);
   }

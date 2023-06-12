@@ -26,6 +26,7 @@ class AmbulancesProvider {
   }
 
   Future<void> updateAmbulance(String id, Map<String, dynamic> data) async {
+    print(data);
     await FirestoreHelper.updateDocument('ambulances', id, data);
   }
 }
