@@ -1,3 +1,4 @@
+import 'package:admin/global/services/auth_service.dart';
 import 'package:admin/requests/data/models/ambulance_request.dart';
 import 'package:admin/requests/logic/requests_handler/requests_handler_cubit.dart';
 import 'package:flutter/foundation.dart';
@@ -13,8 +14,8 @@ class RequestsScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<RequestsHandlerCubit>(context)
-        .getRequests('NTwiJZd0WAH9AWCIhLgf');
+    // BlocProvider.of<RequestsHandlerCubit>(context).getRequests(
+    //     RepositoryProvider.of<AuthService>(context).user!.hospitalId!);
     return ScreensUITemplete(
       onSearchChanged: (value) {
         print(value);

@@ -25,12 +25,14 @@ class MainScreen extends StatelessWidget {
   ];
   var emergencyRequests;
   var dailog;
+
   @override
   Widget build(BuildContext context) {
     print("build");
     return BlocListener<RequestsHandlerCubit, RequestsHandlerState>(
       listener: (context, state) async {
         print("listen");
+
         if (state.requests != null &&
             state.requests!.isNotEmpty &&
             dailog == null &&
@@ -40,11 +42,15 @@ class MainScreen extends StatelessWidget {
               element.type == AmbulanceRequestType.emergency);
           if (emergencyRequests.isNotEmpty) {
             print(emergencyRequests.length);
-            //Emergency alert
+
             for (var request in emergencyRequests) {
+              if (dailog != null) {
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+              print("showing");
               dailog = showDialog(
                 context: context,
-                builder: (_) => AlertDialog(
+                builder: (context) => AlertDialog(
                   title: Text("Emergency Request"),
                   content: Column(
                     children: [
@@ -64,21 +70,55 @@ class MainScreen extends StatelessWidget {
                         BlocProvider.of<RequestsHandlerCubit>(context)
                             .cancelRequest(request.id!);
                         Navigator.of(context, rootNavigator: true).pop();
+                        dailog = null;
+                        emergencyRequests = null;
                       },
                     ),
                     ElevatedButton(
                       child: Text("Accept Request",
                           style: TextStyle(color: Colors.white, fontSize: 18)),
                       onPressed: () {
-                        BlocProvider.of<RequestsHandlerCubit>(context)
-                            .acceptRequest(
-                          request.id!,
-                          'cA3DwLyRnfUV6hRpm0SK', // get the ambulance id from the user
-                          RepositoryProvider.of<AuthService>(context)
-                              .user!
-                              .hospitalId!,
+                        TextEditingController ambulanceID =
+                            TextEditingController();
+                        Navigator.of(context, rootNavigator: true).pop();
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Emergency Request"),
+                            content: Column(
+                              children: [
+                                TextFormField(
+                                  controller: ambulanceID,
+                                )
+                              ],
+                              mainAxisSize: MainAxisSize.min,
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                child: Text("Accept Request",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18)),
+                                onPressed: () {
+                                  BlocProvider.of<RequestsHandlerCubit>(context)
+                                      .acceptRequest(
+                                    request.id!,
+                                    ambulanceID.text,
+                                    RepositoryProvider.of<AuthService>(context)
+                                        .user!
+                                        .hospitalId!,
+                                    emergency: true,
+                                  );
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  dailog = null;
+                                  emergencyRequests = null;
+                                },
+                              ),
+                            ],
+                          ),
                         );
-                        Navigator.of(context).pop();
                       },
                     ),
                   ],

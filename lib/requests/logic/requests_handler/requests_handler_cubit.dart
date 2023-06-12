@@ -1,4 +1,3 @@
-
 import 'package:admin/global/utlis/helpers/firestore_helper.dart';
 import 'package:bloc/bloc.dart';
 
@@ -41,8 +40,10 @@ class RequestsHandlerCubit extends Cubit<RequestsHandlerState> {
   }
 
   Future<void> acceptRequest(
-      String requestId, String ambulanceId, String hospitalId) async {
-    await RequestsProvider().acceptRequest(requestId, ambulanceId, hospitalId);
+      String requestId, String ambulanceId, String hospitalId,
+      {bool emergency = false}) async {
+    await RequestsProvider().acceptRequest(requestId, ambulanceId, hospitalId,
+        emergency: emergency);
   }
 
   void cancelRequest(requestId) {

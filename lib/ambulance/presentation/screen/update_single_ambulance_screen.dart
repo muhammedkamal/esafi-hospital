@@ -3,9 +3,7 @@ import 'package:admin/global/logic/cubits/hospital/single_hospital_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../logic/ambulance_bloc/ambulance_bloc.dart';
-import '../../logic/ambulance_bloc/ambulance_event.dart';
+import '../../logic/ambulance_bloc/ambulances_bloc.dart';
 
 class UpdateAmbulanceScreen extends StatefulWidget {
   final Ambulance ambulance;

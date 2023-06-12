@@ -14,36 +14,34 @@ class SingleEmployeeScreen extends StatelessWidget {
         title: Text(hospitalemployee.id),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: DataTable(columnSpacing: defaultPadding, columns: [
-                DataColumn(label: Text('Feild')),
-                DataColumn(label: Text('Data')),
-              ], rows: [
-                DataRow(cells: [
-                  DataCell(Text('Name')),
-                  DataCell(Text(hospitalemployee.name)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Email')),
-                  DataCell(Text(hospitalemployee.email)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Phone Number')),
-                  DataCell(Text(hospitalemployee.phoneNumber!)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Hospital ID')),
-                  DataCell(Text(hospitalemployee.hospitalId)),
-                ]),
+      body: Column(children: [
+        Expanded(
+          flex: 1,
+          child: SingleChildScrollView(
+            child: DataTable(columnSpacing: defaultPadding, columns: [
+              DataColumn(label: Text('Feild')),
+              DataColumn(label: Text('Data')),
+            ], rows: [
+              DataRow(cells: [
+                DataCell(Text('Name')),
+                DataCell(Text(hospitalemployee.name)),
               ]),
-            ),
-          )
-        ]
-      ),
-          );
+              DataRow(cells: [
+                DataCell(Text('Email')),
+                DataCell(Text(hospitalemployee.email)),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Phone Number')),
+                DataCell(Text(hospitalemployee.phoneNumber ?? "-")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Hospital ID')),
+                DataCell(Text(hospitalemployee.hospitalId)),
+              ]),
+            ]),
+          ),
+        )
+      ]),
+    );
   }
 }
