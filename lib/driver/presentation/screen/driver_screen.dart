@@ -42,6 +42,7 @@ class _DriverScreenState extends State<DriverScreen> {
               children: [
                 ElevatedButton.icon(
                   style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
                     padding: EdgeInsets.symmetric(
                       horizontal: defaultPadding * 1.5,
                       vertical: defaultPadding /
@@ -83,13 +84,23 @@ class _DriverScreenState extends State<DriverScreen> {
                             ),
                           ),
                           actions: [
-                            TextButton(
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.grey),
+                              ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               },
                               child: Text('Cancel'),
                             ),
                             ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.red),
+                              ),
                               onPressed: () {
                                 // var hospital;
                                 BlocProvider.of<DriverBloc>(context)
@@ -197,8 +208,10 @@ class _DriverScreenState extends State<DriverScreen> {
                                     ),
                                   );
                                 },
-                                icon: Icon(Icons.edit),
-                                color: Colors.black,
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.green,
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {

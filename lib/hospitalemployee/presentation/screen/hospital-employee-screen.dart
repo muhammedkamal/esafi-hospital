@@ -177,6 +177,10 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                 )
               : TableContainer(
                   headerTrailing: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red),
+                    ),
                     icon: Icon(Icons.add),
                     label: Text('Add hospital employee'),
                     onPressed: () {
@@ -219,6 +223,11 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                             ),
                             actions: [
                               ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red),
+                                ),
                                 onPressed: () {
                                   BlocProvider.of<SingleHospitalCubit>(context)
                                       .addHospitalEmployee({
@@ -234,9 +243,13 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                 child: Text('Add'),
                               ),
                               ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.grey),
+                                ),
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
+                                  Navigator.of(context).pop();
                                 },
                                 child: Text('Cancel'),
                               ),
@@ -312,7 +325,10 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                 ),
                                 DataCell(Row(children: [
                                   IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
@@ -376,7 +392,7 @@ class _SingleHospitalState extends State<HospitalEmployeeScreen> {
                                     },
                                     icon: Icon(
                                       Icons.edit,
-                                      color: Colors.black,
+                                      color: Colors.green,
                                     ),
                                   ),
                                 ]))

@@ -74,18 +74,9 @@ class RequestsScreen extends StatelessWidget {
                                       onPressed: () {
                                         showDialog(
                                             context: context,
-                                            builder: (context) {
-                                              return Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.5,
-                                                child: Card(
-                                                  child: Column(
+                                            builder: (context) => AlertDialog(
+                                                  title: Text("Normal Request"),
+                                                  content: Column(
                                                     children: [
                                                       TextFormField(
                                                         controller: controller,
@@ -95,31 +86,41 @@ class RequestsScreen extends StatelessWidget {
                                                               'AmbulanceId',
                                                         ),
                                                       ),
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          BlocProvider.of<
-                                                                      RequestsHandlerCubit>(
-                                                                  context)
-                                                              .acceptRequest(
-                                                                  state
-                                                                      .requests![
-                                                                          index]
-                                                                      .id!,
-                                                                  controller
-                                                                      .text,
-                                                                  'NTwiJZd0WAH9AWCIhLgf');
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text(
-                                                          'Accept Request',
-                                                        ),
-                                                      ),
                                                     ],
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                   ),
-                                                ),
-                                              );
-                                            });
+                                                  actions: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        BlocProvider.of<
+                                                                    RequestsHandlerCubit>(
+                                                                context)
+                                                            .acceptRequest(
+                                                          state.requests![index]
+                                                              .id!,
+                                                          controller.text,
+                                                          RepositoryProvider.of<
+                                                                      AuthService>(
+                                                                  context)
+                                                              .user!
+                                                              .hospitalId!,
+                                                          emergency: false,
+                                                        );
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    Colors.red),
+                                                      ),
+                                                      child: Text(
+                                                        'Accept Request',
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ));
                                       },
                                       icon: Icon(
                                         Icons.check,

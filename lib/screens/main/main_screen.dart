@@ -68,6 +68,10 @@ class MainScreen extends StatelessWidget {
                   ),
                   actions: [
                     ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
+                      ),
                       child: Text("Decline Request",
                           style: TextStyle(color: Colors.white, fontSize: 18)),
                       onPressed: () {
@@ -79,6 +83,10 @@ class MainScreen extends StatelessWidget {
                       },
                     ),
                     ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                      ),
                       child: Text("Accept Request",
                           style: TextStyle(color: Colors.white, fontSize: 18)),
                       onPressed: () {
@@ -99,6 +107,11 @@ class MainScreen extends StatelessWidget {
                             ),
                             actions: [
                               ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red),
+                                ),
                                 child: Text("Accept Request",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 18)),

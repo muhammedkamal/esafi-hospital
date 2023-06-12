@@ -42,6 +42,10 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                       }
                       return TableContainer(
                         headerTrailing: ElevatedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                          ),
                           onPressed: () {
                             // data['Position'] = value;
                             showDialog(
@@ -87,6 +91,11 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                   ),
                                   actions: [
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.red),
+                                      ),
                                       onPressed: () async {
                                         await BlocProvider.of<
                                                 SingleHospitalCubit>(context)
@@ -103,6 +112,11 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                       child: Text('Add'),
                                     ),
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.grey),
+                                      ),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -192,7 +206,7 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                         },
                                         icon: Icon(
                                           Icons.edit,
-                                          color: Colors.black,
+                                          color: Colors.green,
                                         ),
                                       ),
                                       IconButton(
@@ -232,7 +246,7 @@ class _HospitalsScreenState extends State<AmbulanceScreen> {
                                         },
                                         icon: Icon(
                                           Icons.delete,
-                                          color: Colors.black,
+                                          color: Colors.red,
                                         ),
                                       ),
                                     ],
