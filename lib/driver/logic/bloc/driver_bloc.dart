@@ -19,20 +19,20 @@ class DriverBloc extends Bloc<DriverEvent, DriverState> {
             emit(DriverLoaded(driver));
           } else if (event is DeleteDriver) {
             emit(DriverLoading());
-            await DriverProvider().deleteDriver(event.id);
-            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-            // emit(DriverLoaded(driver));
+            await DriverProvider().deleteDriver(event.hospitalId);
+            List<AmbulanceDriver> driver = await DriverProvider().getDriver(event.hospitalId);
+            emit(DriverLoaded(driver));
           } else if (event is UpdateDriver) {
             emit(DriverLoading());
             await DriverProvider()
-                .updateDriver(event.id, event.updated.toMap());
-            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-            // emit(DriverLoaded(driver));
+                .updateDriver(event.hospitalId, event.updated.toMap());
+            List<AmbulanceDriver> driver = await DriverProvider().getDriver(event.hospitalId);
+            emit(DriverLoaded(driver));
           } else if (event is AddDriver) {
             emit(DriverLoading());
             await DriverProvider().createDriver(event.data);
-            // List<AmbulanceDriver> driver = await DriverProvider().getDriver();
-            // emit(DriverLoaded(driver));
+            List<AmbulanceDriver> driver = await DriverProvider().getDriver(event.hospitalId);
+            emit(DriverLoaded(driver));
           }
         } catch (e) {
           emit(DriverLoadingError(e.toString()));

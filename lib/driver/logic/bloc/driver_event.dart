@@ -14,29 +14,30 @@ class LoadDriver extends DriverEvent {
 }
 
 class AddDriver extends DriverEvent {
+  final String hospitalId;
   final Map<String, dynamic> data;
 
-  AddDriver(this.data);
+  AddDriver(this.data, this.hospitalId);
 
   @override
   List<Object> get props => [data];
 }
 
 class DeleteDriver extends DriverEvent {
-  final String id;
+  final String hospitalId;
 
-  DeleteDriver(this.id);
+  DeleteDriver(this.hospitalId);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [hospitalId];
 }
 
 class UpdateDriver extends DriverEvent {
-  final String id;
+  final String hospitalId;
   final AmbulanceDriver updated;
 
-  UpdateDriver(this.id, this.updated);
+  UpdateDriver(this.hospitalId, this.updated);
 
   @override
-  List<Object> get props => [id, updated];
+  List<Object> get props => [hospitalId, updated];
 }

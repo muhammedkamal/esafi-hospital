@@ -1,6 +1,6 @@
-import 'package:admin/driver/data/model/driver.dart';
+import 'package:admin/driver/presentation/screen/single_driver_screen.dart';
+import 'package:admin/driver/presentation/screen/update_driver_screen.dart';
 import 'package:admin/global/services/auth_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -175,20 +175,39 @@ class _DriverScreenState extends State<DriverScreen> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Colors.black,
-                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => SingleDriverScreen(
+                                        driver: state.driver[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.remove_red_eye),
+                                color: Colors.black,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => UpdateDriverScreen(
+                                        driver: state.driver[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.edit),
+                                color: Colors.black,
                               ),
                               IconButton(
                                 onPressed: () {
                                   showDialog(
                                     context: context,
                                     builder: (_) => AlertDialog(
-                                      title: Text('Delete Hospitals'),
+                                      title: Text('Delete Driver'),
                                       content: Text(
-                                          'Are you sure you want to delete this Hospitals?'),
+                                          'Are you sure you want to delete this Driver?'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {

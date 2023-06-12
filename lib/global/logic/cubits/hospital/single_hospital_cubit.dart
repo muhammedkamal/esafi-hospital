@@ -1,15 +1,8 @@
-import 'package:admin/ambulance/logic/ambulance_bloc/ambulance_bloc.dart';
-import 'package:admin/ambulance/logic/ambulance_bloc/ambulance_event.dart';
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../driver/data/model/driver.dart';
-import '../../../../hospitalemployee/logic/block/hospital-employe-state.dart';
 import '../../../data/models/hospitals.dart';
-import '../../../utlis/helpers/firestore_helper.dart';
 import '../../providers/hospital_provider.dart';
 
 part 'single_hospital_state.dart';

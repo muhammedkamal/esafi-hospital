@@ -1,4 +1,3 @@
-import 'package:admin/global/services/auth_service.dart';
 import 'package:admin/global/utlis/helpers/firestore_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

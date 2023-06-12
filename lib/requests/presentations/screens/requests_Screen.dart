@@ -14,8 +14,8 @@ class RequestsScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<RequestsHandlerCubit>(context)
-        .getRequests('NTwiJZd0WAH9AWCIhLgf');
+    // BlocProvider.of<RequestsHandlerCubit>(context).getRequests(
+    //     RepositoryProvider.of<AuthService>(context).user!.hospitalId!);
     return ScreensUITemplete(
       onSearchChanged: (value) {
         print(value);

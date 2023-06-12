@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../global/data/models/hospitals.dart';
-import '../../logic/ambulance_bloc/ambulance_bloc.dart';
-import '../../logic/ambulance_bloc/ambulance_event.dart';
 
 class SingleAmbulanceScreen extends StatelessWidget {
   final Ambulance ambulance; // add the 'ambulance' named parameter

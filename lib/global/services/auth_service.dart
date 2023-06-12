@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../data/models/admin.dart';
 import '../utlis/helpers/firestore_helper.dart';
-import '../utlis/helpers/storage_helper.dart';
 
 class AuthService {
   String? userId;
@@ -26,7 +25,7 @@ class AuthService {
       final String newUserId = _userCredential!.user!.uid;
       await FirestoreHelper.addDocumentWithId(collection, newUserId, userData);
       return true;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       rethrow;
     } catch (e) {
       rethrow;
@@ -41,7 +40,7 @@ class AuthService {
           email: email, password: password);
       userId = _userCredential!.user!.uid;
       return true;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       rethrow;
     } catch (e) {
       rethrow;
@@ -76,7 +75,7 @@ class AuthService {
     String tag = "logOut";
     try {
       _firebaseAuth.signOut();
-    } on FirebaseAuthException catch (exception) {
+    } on FirebaseAuthException {
       rethrow;
     }
   }
@@ -165,7 +164,7 @@ class AuthService {
       await _firebaseAuth.currentUser!.reauthenticateWithCredential(credential);
 
       await _firebaseAuth.currentUser!.updatePassword(newP);
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       rethrow;
     }
   }
